@@ -6,7 +6,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-html-build');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-stylus');
     grunt.loadNpmTasks('grunt-jsvalidate');
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-contrib-less');
@@ -37,6 +36,19 @@ module.exports = function (grunt) {
                         cwd: 'app/js',
                         expand: true,
                         flatten: false
+                    }
+                ]
+            },
+
+            html: {
+                files: [
+                    {
+                        src: [
+                            '<%= app_files.index %>'
+                        ],
+                        dest: '<%= build_dir %>/app/',
+                        expand: true,
+                        flatten: true
                     }
                 ]
             },
@@ -96,16 +108,6 @@ module.exports = function (grunt) {
                         expand: true
                     }
                 ]
-            },
-        },
-        stylus: {
-            dev: {
-                options: {
-                    compress: false
-                },
-                files: {
-                    '<%= build_dir %>/app/assets/css/default-<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.stylus.default %>'
-                }
             }
         },
         less: {
@@ -138,6 +140,12 @@ module.exports = function (grunt) {
             ]
         },
         watch: {
+            index: {
+                files: [
+                    '<%= app_files.index %>'
+                ],
+                tasks: ['copy:html']
+            },
             app_js: {
                 files: [
                     '<%= app_files.js %>',
@@ -178,6 +186,7 @@ module.exports = function (grunt) {
 
         'copy:app_js',
         'copy:app_assets',
+        'copy:html',
 
         'less:dev',
 

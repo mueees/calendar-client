@@ -2,9 +2,19 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,300,500,700"/>
+    <link rel="stylesheet" href="assets/css/default-calendar-0.0.1.css"/>
+    <title>Calendar</title>
 </head>
 <body>
 
+<script src="vendor/requirejs/require.js"></script>
+<script>
+    require(['js/config/index'], function () {
+        require(['main'], function () {
+        });
+    });
+</script>
 </body>
 </html>

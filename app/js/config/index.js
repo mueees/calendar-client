@@ -1,7 +1,7 @@
 requirejs.config({
     baseUrl: 'js/',
     paths: {
-        app: 'apps/base',
+        clientCore: '../vendor/client-core/js',
 
         marionette: '../vendor/marionette/marionette',
         backbone: "../vendor/backbone/backbone",
