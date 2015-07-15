@@ -1,16 +1,12 @@
 define([
     'app',
     'kernel/components/router/BaseRouter.router',
-    'kernel/components/sign/sign.controller',
     './layout.view',
 
-    'core/log/log.service',
-    'core/window-title/window-title.service',
-    'core/url/url.service',
-    'core/notify/notify.service',
-    'core/channel/channel.service'
-], function (App, BaseRouter, SignupController, SignupLayout, $mLog, $mTitle, $mUrl, $mNotify, $mChannel) {
-    App.module('Apps.Account.Sign', {
+    'clientCore/log/log.service',
+    'clientCore/window-title/window-title.service'
+], function (App, BaseRouter, SignupLayout, $mLog, $mTitle) {
+    App.module('Apps.Sign', {
         startWithParent: false,
 
         define: function (Sign, App, Backbone, Marionette, $, _) {
@@ -31,7 +27,7 @@ define([
 
                     controller: {
                         sign: function (resolve) {
-                            App.startSubApp("Apps.Account.Sign", {});
+                            App.startSubApp("Apps.Sign", {});
                         },
 
                         redirect: function () {
@@ -44,13 +40,9 @@ define([
 
             var Controller = Marionette.Controller.extend({
                 initialize: function () {
-                    var layout = new SignupLayout(),
-                        signup = new SignupController({
-                            region: layout.getRegion('signup')
-                        });
+                    var layout = new SignupLayout();
 
                     App.body.show(layout);
-                    signup.show();
 
                     $mTitle.setTitle('Sign');
                 }
