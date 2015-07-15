@@ -10,7 +10,12 @@
 <body>
 
 <script src="vendor/requirejs/require.js"></script>
-<script src="js/calendar-calendar-0.0.1.js"></script>
+<script>
+    require(['js/config/index'], function () {
+        require(['main'], function () {
+        });
+    });
+</script>
 
 <div id="body"></div>
 <div class="mue-modal"></div>

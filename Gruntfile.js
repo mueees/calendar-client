@@ -40,13 +40,26 @@ module.exports = function (grunt) {
                 ]
             },
 
-            html: {
+            indexDev: {
+                files: [
+                    {
+                        src: [
+                            '<%= app_files.indexDev %>'
+                        ],
+                        dest: '<%= build_dir %>/app/',
+                        expand: true,
+                        flatten: true
+                    }
+                ]
+            },
+
+            index: {
                 files: [
                     {
                         src: [
                             '<%= app_files.index %>'
                         ],
-                        dest: '<%= build_dir %>/app/',
+                        dest: '<%= compile_dir %>/app/',
                         expand: true,
                         flatten: true
                     }
@@ -144,7 +157,7 @@ module.exports = function (grunt) {
                 files: [
                     '<%= app_files.index %>'
                 ],
-                tasks: ['copy:html']
+                tasks: ['copy:indexDev']
             },
             app_js: {
                 files: [
@@ -166,8 +179,8 @@ module.exports = function (grunt) {
             account: {
                 options: {
                     baseUrl: 'app/js',
-                    name: 'pages/account',
-                    out: '<%= compile_dir %>/app/js/account-<%= pkg.name %>-<%= pkg.version %>.js',
+                    name: 'main',
+                    out: '<%= compile_dir %>/app/js/calendar-<%= pkg.name %>-<%= pkg.version %>.js',
                     optimize: 'none',
                     mainConfigFile: "app/js/config/index.js"
                 }
@@ -186,7 +199,7 @@ module.exports = function (grunt) {
 
         'copy:app_js',
         'copy:app_assets',
-        'copy:html',
+        'copy:indexDev',
 
         'less:dev',
 
@@ -201,6 +214,8 @@ module.exports = function (grunt) {
         'copy:app_assets_compile',
 
         'copy:vendor_js_compile',
+
+        'copy:index',
 
         'requirejs:account',
 
