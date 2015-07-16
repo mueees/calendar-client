@@ -6,7 +6,8 @@ define([
     return Marionette.LayoutView.extend({
         template: hbs.compile(layoutTemplate),
         regions: {
-            sign: '.sign-region'
+            dateSwitcher: '.date-switcher-region',
+            datePeriod: '.date-period-region'
         }
     })
 });
