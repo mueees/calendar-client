@@ -1,6 +1,7 @@
 define([
     'app',
     'backbone',
+    'moment',
     'kernel/components/router/BaseRouter.router',
     './layout.view',
 
@@ -12,7 +13,7 @@ define([
     'clientCore/components/group-button/group-button.view',
     'clientCore/url/url.service',
     'clientCore/helper/helper.service'
-], function (App, Backbone, BaseRouter, MainLayout, $mLog, $mTitle, DateSwitcherComponent, GroupButtonView, $mUrl, $mHelper) {
+], function (App, Backbone, moment, BaseRouter, MainLayout, $mLog, $mTitle, DateSwitcherComponent, GroupButtonView, $mUrl, $mHelper) {
     App.module('Apps.Main', {
         startWithParent: false,
 
@@ -52,26 +53,10 @@ define([
                     startDate = $mHelper.date.convertStringDate(startDate);
                     endDate = $mHelper.date.convertStringDate(endDate);
 
-                    var dateSwitcherModel = new Backbone.Model({
-                        type: Number(period) || 1,
-                        start: startDate || new Date(),
-                        end: endDate
-                    });
-
-                    var dateSwitcherComponent = new DateSwitcherComponent({
-                        region: layout.getRegion('dateSwitcher'),
-                        model: dateSwitcherModel
-                    });
-
-                    dateSwitcherComponent.show();
-
-                    if (period === 0) {
-
-                    }
-
+                    // initialize date periods
                     var groupButtonView = new GroupButtonView({
                         model: new Backbone.Model({
-                            active: 1,
+                            active: (period || period === 0) ? period : 1,
                             items: [
                                 {
                                     name: 'Day',
@@ -94,6 +79,38 @@ define([
                     });
 
                     layout.getRegion('datePeriod').show(groupButtonView);
+
+                    // initialize date switcher
+                    var dateSwitcherType = 1;
+
+                    if(period || period === 0){
+                        switch (period) {
+                            case 0:
+                                dateSwitcherType = 1;
+                                break;
+                            case 1:
+                                dateSwitcherType = 2;
+                                break;
+                            case 2:
+                                dateSwitcherType = 3;
+                                break;
+                            case 3:
+                                dateSwitcherType = 1;
+                                break;
+                        }
+                    }
+
+                    var dateSwitcherModel = new Backbone.Model({
+                        type: dateSwitcherType,
+                        start: startDate || new Date(),
+                        end: endDate || moment(new Date()).add(7, 'd').toDate()
+                    }),
+                        dateSwitcherComponent = new DateSwitcherComponent({
+                            region: layout.getRegion('dateSwitcher'),
+                            model: dateSwitcherModel
+                        });
+
+                    dateSwitcherComponent.show();
                 }
             });
 
