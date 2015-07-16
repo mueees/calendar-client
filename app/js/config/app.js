@@ -1,3 +1,9 @@
 define([], function () {
-    return {}
+
+    var baseConfig = Calendar || {},
+        config = {};
+
+    config.proxy = baseConfig.proxy;
+
+    return config;
 });

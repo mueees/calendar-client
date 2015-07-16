@@ -5,8 +5,7 @@ define([
 
     function create(credentials) {
         storage.set(sessionName, {
-            email: credentials.email,
-            token: credentials.token
+            client_token: credentials.client_token
         });
     }
 

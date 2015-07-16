@@ -1,26 +1,28 @@
 define([
     'jquery',
+    'config/app',
     './session.service',
-    'kernel/resource/commands/user'
-], function ($, $mSession, Commands) {
+    'mue-proxy'
+], function ($, config, $mSession) {
+    Mue.initialize(config.proxy.oauth);
+
+    if( config.proxy.origin ){
+        Mue.config({
+            origin: config.proxy.origin
+        });
+    }
+
     function isAuth() {
         return $mSession.getSession();
     }
 
-    function sign(credentials) {
-        var command = Commands.get('sign'),
-            promise = command.execute(credentials);
+    function sign() {
+        var promise = Mue.popup();
 
         promise.then(function (data) {
-            data = data || {};
-
-            if(data._id){
-                // this is sign up
-            } else if( data.token ){
-                // this is sign in
-                credentials.token = data.token;
-                $mSession.create(credentials);
-            }
+            $mSession.create({
+                client_token: data.client_token
+            });
         });
 
         return promise;

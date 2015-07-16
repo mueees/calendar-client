@@ -6,13 +6,18 @@ require([
     'kernel/security/security.service',
 
     //screens
-    'screens/sign/module'
+    'screens/sign/module',
+    'screens/main/module'
 ], function (App, $, $mNotify, $mModal, $mSecurity) {
     $mNotify.setContainer($('.mue-notify'));
 
     $mModal.setContainer($('.mue-modal'));
 
     $mSecurity.setAfterAuth({
+        fragment: 'main'
+    });
+
+    $mSecurity.setSignPage({
         fragment: 'sign'
     });
 

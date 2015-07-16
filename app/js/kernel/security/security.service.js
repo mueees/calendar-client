@@ -76,20 +76,21 @@ define([
         });
     }
 
-    function sign(credentials){
-        $mAuth.sign(credentials).then(function (data) {
-            if(data._id){
-                $mNotify.notify({
-                    text: 'Please check your email'
-                });
-            } else if( data.token ){
-                $mNotify.notify({
-                    text: 'Sign in success',
-                    type: 'success'
-                });
+    function sign(){
+        $mAuth.sign().then(function () {
+            $mNotify.notify({
+                text: 'Sign in success',
+                type: 'success'
+            });
 
-                navigateAfterSign();
-            }
+            navigateAfterSign();
+        }, function (data) {
+            data = data || {};
+
+            $mNotify.notify({
+                text: 'Cannot sign' + data.message,
+                type: 'error'
+            });
         });
     }
 

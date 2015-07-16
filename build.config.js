@@ -41,6 +41,7 @@ module.exports = {
             'app/vendor/backbone/backbone.validation.js',
             'app/vendor/backbone/backbone.wreqr.js',
             'app/vendor/storage/storage.js',
+            'app/vendor/mue-proxy/mue-proxy.js',
             'app/vendor/client-core/js/**/*'
         ],
         css: [],

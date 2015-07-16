@@ -1,11 +1,12 @@
 define([
     'app',
     'kernel/components/router/BaseRouter.router',
+    'kernel/components/sign/sign.controller',
     './layout.view',
 
     'clientCore/log/log.service',
     'clientCore/window-title/window-title.service'
-], function (App, BaseRouter, SignupLayout, $mLog, $mTitle) {
+], function (App, BaseRouter, SignController, SignLayout, $mLog, $mTitle) {
     App.module('Apps.Sign', {
         startWithParent: false,
 
@@ -20,13 +21,13 @@ define([
                         sign: {
                             auth: false,
                             redirectIfAuth: {
-                                fragment: 'dashboard/profile'
+                                fragment: 'main'
                             }
                         }
                     },
 
                     controller: {
-                        sign: function (resolve) {
+                        sign: function () {
                             App.startSubApp("Apps.Sign", {});
                         },
 
@@ -40,11 +41,17 @@ define([
 
             var Controller = Marionette.Controller.extend({
                 initialize: function () {
-                    var layout = new SignupLayout();
+                    var layout = new SignLayout();
 
                     App.body.show(layout);
 
                     $mTitle.setTitle('Sign');
+
+                    var sign = new SignController({
+                        region: layout.getRegion('sign')
+                    });
+
+                    sign.show();
                 }
             });
 

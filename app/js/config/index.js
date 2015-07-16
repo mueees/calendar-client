@@ -2,6 +2,7 @@ requirejs.config({
     baseUrl: 'js/',
     paths: {
         clientCore: '../vendor/client-core/js',
+        'mue-proxy': '../vendor/mue-proxy/mue-proxy',
 
         marionette: '../vendor/marionette/marionette',
         backbone: "../vendor/backbone/backbone",

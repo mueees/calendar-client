@@ -1,0 +1,5 @@
+<% _.each(items, function(item, i){ %>
+<button type="button" class="btn <%= (active == i) ? 'btn-banana': 'btn-lagoon' %>"
+        data-index="<%= i %>" data-value="<%= item.value || item.name %>"><%= item.name %>
+</button>
+<% }) %>
