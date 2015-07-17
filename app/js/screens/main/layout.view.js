@@ -7,7 +7,8 @@ define([
         template: hbs.compile(layoutTemplate),
         regions: {
             dateSwitcher: '.date-switcher-region',
-            datePeriod: '.date-period-region'
+            datePeriod: '.date-period-region',
+            calendar: '.calendar-region'
         }
     })
 });

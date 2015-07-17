@@ -10,13 +10,14 @@ define([
 
     // components
     'clientCore/components/calendar/date-switcher/date-switcher.controller',
+    'kernel/components/calendar/calendar-agenda/calendar-agenda.controller',
     'clientCore/components/group-button/group-button.view',
     'clientCore/url/url.service',
     'clientCore/helper/helper.service',
 
     // models
     'kernel/resource/calendar.collection'
-], function (App, Backbone, moment, BaseRouter, MainLayout, $mLog, $mTitle, DateSwitcherComponent, GroupButtonView, $mUrl, $mHelper, CalendarCollection) {
+], function (App, Backbone, moment, BaseRouter, MainLayout, $mLog, $mTitle, DateSwitcherComponent, CalendarAgendaComponent, GroupButtonView, $mUrl, $mHelper, CalendarCollection) {
     App.module('Apps.Main', {
         startWithParent: false,
 
@@ -140,6 +141,14 @@ define([
                         });
 
                     dateSwitcherComponent.show();
+
+                    // initialize agenda
+                    var calendarAgendaComponent = new CalendarAgendaComponent({
+                        region: layout.getRegion('calendar'),
+                        calendars: options.resolve.calendars
+                    });
+
+                    calendarAgendaComponent.show();
 
                     // listeners
                     this.listenTo(groupButtonModel, 'change:active', function (model, period) {
