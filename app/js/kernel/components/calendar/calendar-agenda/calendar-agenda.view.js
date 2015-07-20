@@ -7,7 +7,7 @@ define([
 
         serializeData: function () {
             return {
-                calendars: this.collection.toJSON()
+                calendars: []
             }
         }
     });

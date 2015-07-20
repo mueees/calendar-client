@@ -6,7 +6,7 @@ define([
 ], function ($, config, $mSession) {
     Mue.initialize(config.proxy.oauth);
 
-    if( config.proxy.origin ){
+    if (config.proxy.origin) {
         Mue.config({
             origin: config.proxy.origin
         });

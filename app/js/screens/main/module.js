@@ -2,6 +2,7 @@ define([
     'app',
     'backbone',
     'moment',
+    'underscore',
     'kernel/components/router/BaseRouter.router',
     './layout.view',
 
@@ -17,7 +18,7 @@ define([
 
     // models
     'kernel/resource/calendar.collection'
-], function (App, Backbone, moment, BaseRouter, MainLayout, $mLog, $mTitle, DateSwitcherComponent, CalendarAgendaComponent, GroupButtonView, $mUrl, $mHelper, CalendarCollection) {
+], function (App, Backbone, moment, _, BaseRouter, MainLayout, $mLog, $mTitle, DateSwitcherComponent, CalendarAgendaComponent, GroupButtonView, $mUrl, $mHelper, CalendarCollection) {
     App.module('Apps.Main', {
         startWithParent: false,
 
@@ -145,7 +146,11 @@ define([
                     // initialize agenda
                     var calendarAgendaComponent = new CalendarAgendaComponent({
                         region: layout.getRegion('calendar'),
-                        calendars: options.resolve.calendars
+                        calendars: options.resolve.calendars,
+                        date: {
+                            start: new Date(),
+                            end: moment(new Date()).add(7, 'd').toDate()
+                        }
                     });
 
                     calendarAgendaComponent.show();

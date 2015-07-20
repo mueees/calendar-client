@@ -9,7 +9,7 @@ define([
     var afterAuth = null,
         signPage = null;
 
-    $mAjax.addErrorInterceptor(function(event, jqxhr){
+    $mAjax.addErrorInterceptor(function (event, jqxhr) {
         var response;
 
         try {
@@ -76,7 +76,7 @@ define([
         });
     }
 
-    function sign(){
+    function sign() {
         $mAuth.sign().then(function () {
             $mNotify.notify({
                 text: 'Sign in success',
