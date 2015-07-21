@@ -1,69 +1,104 @@
 define([
     'marionette',
     './calendar-agenda.view',
-    'kernel/event-storage/event-storage.service',
+    'kernel/resource/event.collection',
     'moment',
     'underscore'
-], function (Marionette, AgendaView, EventStorage, moment, _) {
+], function (Marionette, AgendaView, EventCollection, moment, _) {
+    var DayModel = Backbone.Model.extend({}),
+        DayCollection = Backbone.Collection.extend({
+            model: DayModel
+        });
+
     return Marionette.Object.extend({
         initialize: function (options) {
             options = options || {};
 
-            this.options = options;
+            _.bindAll(this, '_rebuildAgendaModel');
+
             this.region = options.region;
             this.calendars = options.calendars;
-            this.date = options.date;
-
-            this.listenTo(this.calendars, 'add', this.onAddHandler);
-            this.listenTo(this.calendars, 'remove', this.onRemoveHandler);
 
             this.agendaModel = new Backbone.Model({
-                defaults: {
-                    start: this.date.start,
-                    end: this.date.end,
-                    days: [
-                        {
-                            date: new Date(),
-                            event: '<eventModel>',
-                            calendar: '<calendarModel>'
-                        }
-                    ]
-                }
+                start: options.date.start,
+                end: options.date.end,
+                days: new DayCollection([])
             });
 
             this.view = new AgendaView({
-                model: this.agendaModel
+                model: this.agendaModel,
+                collection: this.agendaModel.get('days')
             });
+
+            this.listenTo(this.agendaModel, 'change:start change:end', this._getEvents);
 
             this._getEvents();
         },
 
         _getEvents: function () {
-            EventStorage.get({
-                start: this.date.start,
-                end: this.date.end,
+            EventCollection.get({
+                start: this.agendaModel.get('start'),
+                end: this.agendaModel.get('end'),
                 calendarIds: _.map(this.calendars.toJSON(), '_id')
-            }).then(this._rebuildModel);
+            }).then(this._rebuildAgendaModel);
         },
 
-        _rebuildModel: function (eventCollection) {
+        _rebuildAgendaModel: function (eventCollection) {
+            var days = this._generateDays(this.agendaModel.get('start'), this.agendaModel.get('end'));
+            this._populateData(days, eventCollection, this.calendars);
 
+            this.agendaModel.get('days').reset(days);
         },
 
-        onAddHandler: function () {
+        _generateDays: function (start, end) {
+            var result = [];
 
+            start = new Date(start.getTime());
+            end = new Date(end.getTime());
+
+            start.setHours(0, 0, 0, 0);
+            end.setHours(0, 0, 0, 0);
+
+            while (start <= end) {
+                result.push({
+                    date: new Date(start.getTime()),
+                    events: []
+                });
+
+                start.setDate(start.getDate() + 1);
+            }
+
+            return result;
         },
 
-        onRemoveHandler: function () {
+        _populateData: function (days, eventCollection, calendarCollection) {
+            var format = 'MMMM Do YYYY';
 
+            _.each(days, function (day) {
+                var events = eventCollection.filter(function (event) {
+                    return moment(day.date).format(format) == moment(event.get('start')).format(format);
+                });
+
+                _.each(events, function (event) {
+                    day.events.push({
+                        event: event,
+                        calendar: calendarCollection.find(function (calendar) {
+                            return calendar.get('_id') == event.get('calendarId')
+                        })
+                    })
+                });
+            });
+        },
+
+        setDate: function (date) {
+            this.agendaModel.set({
+                start: date.start,
+                end: date.end
+            });
         },
 
         show: function () {
             this.region.show(this.view);
-        },
-
-        onEnterHandler: function () {
-
         }
     });
 });

@@ -1,6 +1,7 @@
 define([
+    'moment',
     'clientCore/fake-server/fake-server.service'
-], function ($mFakeServer) {
+], function (moment, $mFakeServer) {
 
     // get all applications
     $mFakeServer.setHandler({
@@ -25,29 +26,70 @@ define([
         ]
     });
 
-    // get events by criteria
-    $mFakeServer.setHandler({
-        url: "/api/calendar/event/get",
-        responseTime: 500,
-        responseText: [
+    var event1 = [
             {
                 _id: '1',
                 title: 'Birthday',
                 description: 'Friends birthday',
-                calendarId: '1'
+                calendarId: '1',
+                start: moment(new Date()).add(10, 'm').toDate(),
+                end: moment(new Date()).add(20, 'm').toDate(),
+                isAllDay: false
             },
             {
                 _id: '2',
                 title: 'Home deal',
                 description: 'Home tasks',
-                calendarId: '2'
+                calendarId: '2',
+                start: moment(new Date()).add(50, 'm').toDate(),
+                end: moment(new Date()).add(60, 'm').toDate(),
+                isAllDay: false
             },
             {
                 _id: '3',
                 title: 'Other things',
                 description: 'bla bla',
-                calendarId: '3'
+                calendarId: '3',
+                start: moment(new Date()).add(1, 'm').toDate(),
+                end: moment(new Date()).add(65, 'm').toDate(),
+                isAllDay: false
             }
-        ]
+        ],
+
+        event2 = [
+            {
+                _id: '4',
+                title: 'Birthday 2',
+                description: 'Friends birthday',
+                calendarId: '1',
+                start: moment(new Date()).add(10, 'm').toDate(),
+                end: moment(new Date()).add(20, 'm').toDate(),
+                isAllDay: false
+            },
+            {
+                _id: '5',
+                title: 'Home deal 2',
+                description: 'Home tasks',
+                calendarId: '2',
+                start: moment(new Date()).add(50, 'm').toDate(),
+                end: moment(new Date()).add(60, 'm').toDate(),
+                isAllDay: false
+            },
+            {
+                _id: '6',
+                title: 'Other things 2',
+                description: 'bla bla',
+                calendarId: '3',
+                start: moment(new Date()).add(1, 'm').toDate(),
+                end: moment(new Date()).add(65, 'm').toDate(),
+                isAllDay: false
+            }
+        ];
+
+    // get events by criteria
+    $mFakeServer.setHandler({
+        url: "/api/calendar/event/get",
+        responseTime: 500,
+        responseText: (Math.random() > 0.5) ? event1: event2
     });
 });

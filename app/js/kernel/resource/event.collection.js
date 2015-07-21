@@ -23,6 +23,15 @@ define([
                 });
 
                 return deferred.promise();
+            },
+
+            parse: function (response) {
+                _.each(response, function (item) {
+                    item.start = new Date(item.start);
+                    item.end = new Date(item.end);
+                });
+
+                return response;
             }
         },
         {
