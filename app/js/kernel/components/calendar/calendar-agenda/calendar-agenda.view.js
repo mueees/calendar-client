@@ -5,6 +5,8 @@ define([
 ], function (Marionette, template, DayView) {
 
     return Marionette.CompositeView.extend({
+        className: 'panel mue-panel mue-calendar-agenda',
+        
         template: _.template(template),
 
         childView: DayView,

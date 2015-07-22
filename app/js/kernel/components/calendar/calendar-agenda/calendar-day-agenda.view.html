@@ -1,25 +1,23 @@
-<div class="mue-agenda-day">
-    <div class="row">
-        <div class="col-md-3">
-            <h4><%= date %></h4>
+<div class="row">
+    <div class="col-md-1">
+        <div class="mue-calendar-date">
+            <p class="mue-calendar-date-number"><%= date.date %></p>
+
+            <p><%= date.day %>, <%= date.month %></p>
         </div>
-        <div class="col-md-9">
-            <ul>
-                <% _.each(events, function(item){ %>
-                <li data-event-id="<%= item.event._id %>" data-link="event">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <%= item.event.start.getHours() %>: <%= item.event.start.getMinutes() %> -
-                            <%= item.event.end.getHours() %>: <%= item.event.end.getMinutes() %>
-                        </div>
-                        <div class="col-md-10">
-                            <%= item.event.title %>
-                        </div>
-                    </div>
-                </li>
-                <% }) %>
-            </ul>
+    </div>
+    <div class="col-md-4">
+        <% _.each(events, function(item){ %>
+        <div class="panel mue-panel mue-calendar-agenda-event mue-calendar-color-<%= item.calendar.color %>" data-event-id="<%= item.event._id %>" data-link="event">
+            <div class="panel-body">
+                <div class="mue-calendar-agenda-event-title"><%= item.event.title %></div>
+                <div class="mue-calendar-agenda-event-description"><%= item.event.description %></div>
+                <div>
+                    <%= item.event.start.getHours() %>:<%= item.event.start.getMinutes() %> - <%= item.event.end.getHours() %>:<%= item.event.end.getMinutes() %>
+                </div>
+            </div>
         </div>
+        <% }) %>
     </div>
 </div>
 <br/>

@@ -7,6 +7,8 @@ define([
     return Marionette.ItemView.extend({
         template: _.template(template),
 
+        className: 'mue-calendar-agenda-day',
+
         events: {
             'click [data-link="event"]': "onEventHandler"
         },
@@ -16,9 +18,15 @@ define([
         },
 
         serializeData: function () {
-            var model = this.model.toJSON();
+            var model = this.model.toJSON(),
+                momentDate = moment(model.date);
 
-            model.date = moment(model.date).format('Do dddd, MMMM YYYY');
+            model.date = moment(model.date).format('Do dddd, MMMM');
+            model.date = {
+                date: momentDate.format('DD'),
+                day: momentDate.format('ddd'),
+                month: momentDate.format('MMM')
+            };
             model.events = _.map(model.events, function (item) {
                 return {
                     event: item.event.toJSON(),
@@ -30,7 +38,7 @@ define([
         },
 
         onEventHandler: function (e) {
-            var _id = $(e.target).closest('li').attr('data-event-id'),
+            var _id = $(e.target).closest('.mue-calendar-agenda-event').attr('data-event-id'),
                 event = _.find(this.model.get('events'), function (item) {
                     return item.event.get('_id') == _id;
                 });

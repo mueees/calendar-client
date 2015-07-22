@@ -3,7 +3,7 @@ define([
     'clientCore/fake-server/fake-server.service'
 ], function (moment, $mFakeServer) {
 
-    // get all applications
+    // get all calendars
     $mFakeServer.setHandler({
         url: "/api/calendar/calendar/all",
         responseTime: 750,
@@ -11,17 +11,20 @@ define([
             {
                 _id: '1',
                 name: 'Birthday',
-                description: 'Friends birthday'
+                description: 'Friends birthday',
+                color: 'lagoon'
             },
             {
                 _id: '2',
                 name: 'Home deal',
-                description: 'Home tasks'
+                description: 'Home tasks',
+                color: 'lagoon'
             },
             {
                 _id: '3',
                 name: 'Other things',
-                description: 'bla bla'
+                description: 'bla bla',
+                color: 'banana'
             }
         ]
     });

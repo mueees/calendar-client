@@ -13,7 +13,8 @@ define([
     }
 
     function isAuth() {
-        return $mSession.getSession();
+        return true;
+        //return $mSession.getSession();
     }
 
     function sign() {

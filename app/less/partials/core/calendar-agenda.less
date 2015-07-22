@@ -1,0 +1,33 @@
+.mue-calendar-agenda {
+  .mue-calendar-agenda-event {
+    border: none;
+    margin-bottom: 5px;
+
+    .panel-body {
+      border-radius: 4px;
+      padding: 10px 15px;
+    }
+
+    .mue-calendar-agenda-event-title {
+      font-weight: bold;
+    }
+
+    .mue-calendar-agenda-event-description {
+      font-weight: 100;
+    }
+
+    &.mue-calendar-color-banana {
+      .panel-body {
+        color: white;
+        background: @banana;
+      }
+    }
+
+    &.mue-calendar-color-lagoon {
+      .panel-body {
+        color: white;
+        background: @lagoon;
+      }
+    }
+  }
+}
