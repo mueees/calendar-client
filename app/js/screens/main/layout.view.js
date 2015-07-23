@@ -8,7 +8,8 @@ define([
         regions: {
             dateSwitcher: '.date-switcher-region',
             datePeriod: '.date-period-region',
-            calendar: '.calendar-region'
+            calendar: '.calendar-region',
+            widgetFirst: '.widget-first-region'
         }
     })
 });

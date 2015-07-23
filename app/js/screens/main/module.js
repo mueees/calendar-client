@@ -12,13 +12,14 @@ define([
     // components
     'clientCore/components/calendar/date-switcher/date-switcher.controller',
     'kernel/components/calendar/calendar-agenda/calendar-agenda.controller',
+    'kernel/components/calendar/calendar-manager/calendar-manager.controller',
     'clientCore/components/group-button/group-button.view',
     'clientCore/url/url.service',
     'clientCore/helper/helper.service',
 
     // models
     'kernel/resource/calendar.collection'
-], function (App, Backbone, moment, _, BaseRouter, MainLayout, $mLog, $mTitle, DateSwitcherComponent, CalendarAgendaComponent, GroupButtonView, $mUrl, $mHelper, CalendarCollection) {
+], function (App, Backbone, moment, _, BaseRouter, MainLayout, $mLog, $mTitle, DateSwitcherComponent, CalendarAgendaComponent, CalendarManager, GroupButtonView, $mUrl, $mHelper, CalendarCollection) {
     App.module('Apps.Main', {
         startWithParent: false,
 
@@ -154,6 +155,14 @@ define([
                     });
 
                     calendarAgendaComponent.show();
+
+                    // initialize calendar manager
+                    var calendarManager = new CalendarManager({
+                        region: layout.getRegion('widgetFirst'),
+                        calendars: options.resolve.calendars
+                    });
+
+                    calendarManager.show();
 
                     // listeners
                     this.listenTo(groupButtonModel, 'change:active', function (model, period) {

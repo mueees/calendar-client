@@ -12,6 +12,7 @@ define([
                 _id: '1',
                 name: 'Birthday',
                 description: 'Friends birthday',
+                active: true,
                 color: 'lagoon'
             },
             {
@@ -24,9 +25,19 @@ define([
                 _id: '3',
                 name: 'Other things',
                 description: 'bla bla',
+                active: true,
                 color: 'banana'
             }
         ]
+    });
+
+    // create calendar
+    $mFakeServer.setHandler({
+        url: "/api/calendar/calendar/create",
+        responseTime: 750,
+        responseText: {
+            _id: 4
+        }
     });
 
     var event1 = [
