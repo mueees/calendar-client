@@ -2,15 +2,17 @@ define([
     'marionette',
     'moment',
     'underscore',
-    'text!./calendar-day-agenda.view.html'
-], function (Marionette, moment, _, template) {
+    'text!./calendar-day-agenda.view.html',
+    'kernel/components/calendar/event-add-quick/event-add-quick.controller'
+], function (Marionette, moment, _, template, AddEvent) {
     return Marionette.ItemView.extend({
         template: _.template(template),
 
         className: 'mue-calendar-agenda-day',
 
         events: {
-            'click [data-link="event"]': "onEventHandler"
+            'click [data-link="event"]': "onEventHandler",
+            'click [data-link="newEvent"]': "onNewEventHandler"
         },
 
         initialize: function () {
@@ -42,6 +44,20 @@ define([
                 event = _.find(this.model.get('events'), function (item) {
                     return item.event.get('_id') == _id;
                 });
+        },
+
+        onNewEventHandler: function () {
+            var addEvent = new AddEvent({
+                region: new Marionette.Region({
+                    el: this.$el.find('.new-event-region')
+                })
+            });
+
+            addEvent.show();
+
+            this.listenTo(addEvent, 'create', function(event){
+                console.log('cool')
+            });
         }
     });
 });

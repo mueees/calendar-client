@@ -40,6 +40,13 @@ define([
         }
     });
 
+    // delete calendar
+    $mFakeServer.setHandler({
+        url: "/api/calendar/calendar/delete",
+        responseTime: 750,
+        responseText: {}
+    });
+
     var event1 = [
             {
                 _id: '1',

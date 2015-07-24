@@ -14,7 +14,8 @@ define([
         },
 
         _urls: {
-            create: '/api/calendar/calendar/create'
+            create: '/api/calendar/calendar/create',
+            remove: '/api/calendar/calendar/delete'
         },
 
         validation: {
@@ -30,6 +31,16 @@ define([
                 data: JSON.stringify({
                     name: this.get('name'),
                     description: this.get('description')
+                })
+            });
+        },
+
+        remove: function () {
+            return this.fetch({
+                url: this._urls.remove,
+                type: 'POST',
+                data: JSON.stringify({
+                    _id: this.get('_id')
                 })
             });
         }

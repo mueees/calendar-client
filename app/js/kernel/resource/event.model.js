@@ -2,12 +2,32 @@ define([
     'clientCore/resource/base.model'
 ], function (BaseModel) {
     return BaseModel.extend({
-        idAttribute: '_id',
-
-        headers: {"Content-Type": 'application/json'},
+        defaults: {
+            title: '',
+            description: '',
+            start: new Date(),
+            end: new Date(),
+            isAllDay: false,
+            isRepeat: false
+        },
 
         validation: {
-            name: {
+            title: {
+                required: true
+            },
+            start: {
+                required: true
+            },
+            end: {
+                required: true
+            },
+            isAllDay: {
+                required: true
+            },
+            isRepeat: {
+                required: true
+            },
+            calendarId: {
                 required: true
             }
         },

@@ -2,11 +2,14 @@
     <div class="col-md-1">
         <div class="mue-calendar-date">
             <p class="mue-calendar-date-number"><%= date.date %></p>
-
             <p><%= date.day %>, <%= date.month %></p>
         </div>
+        <button class="btn btn-bruise btn-xs btn-block" data-link="newEvent">add</button>
     </div>
+
     <div class="col-md-4">
+        <div class="new-event-region"></div>
+
         <% _.each(events, function(item){ %>
         <div class="panel mue-panel mue-calendar-agenda-event mue-calendar-color-<%= item.calendar.color %>" data-event-id="<%= item.event._id %>" data-link="event">
             <div class="panel-body">
