@@ -10,7 +10,7 @@
         <div class="form-group">
             <select name="calendarId">
                 <% _.each(calendars, function(calendar){ %>
-                <option value="calendar._id">calendar.name</option>
+                <option value="<%= calendar._id %>"><%= calendar.name %></option>
                 <% }) %>
             </select>
         </div>

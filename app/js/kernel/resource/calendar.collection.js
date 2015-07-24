@@ -4,7 +4,7 @@ define([
 ], function (CalendarModel, BaseCollection) {
     return BaseCollection.extend({
         _api: {
-            all: '/api/calendar/calendar/all'
+            all: 'http://localhost:10002/api/calendar/calendar/all'
         },
 
         model: CalendarModel,

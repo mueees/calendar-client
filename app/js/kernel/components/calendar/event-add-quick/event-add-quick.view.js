@@ -16,6 +16,9 @@ define([
         bindings: {
             '[name=title]': {
                 observe: 'title'
+            },
+            '[name=calendarId]': {
+                observe: 'calendarId'
             }
         },
 

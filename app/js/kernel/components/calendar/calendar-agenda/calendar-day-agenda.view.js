@@ -18,7 +18,11 @@ define([
         initialize: function (options) {
             options = options || {};
 
-            this.listenTo(this.model, 'change:events', this.render);
+            var me = this;
+
+            this.listenTo(this.model, 'change:events', function () {
+                me.render();
+            });
 
             this.calendars = options.calendars;
         },
@@ -60,8 +64,16 @@ define([
 
             addEvent.show();
 
-            this.listenTo(addEvent, 'create', function(event){
-                console.log('cool')
+            this.listenTo(addEvent, 'create', function (event) {
+                var data = {
+                        event: event,
+                        calendar: this.calendars.where({_id: event.get('calendarId')})[0]
+                    },
+                    events = _.clone(this.model.get('events'));
+
+                events.push(data);
+
+                this.model.set('events', events);
             });
         }
     });

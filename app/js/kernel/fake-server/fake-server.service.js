@@ -4,7 +4,7 @@ define([
 ], function (moment, $mFakeServer) {
 
     // get all calendars
-    $mFakeServer.setHandler({
+    /*$mFakeServer.setHandler({
         url: "/api/calendar/calendar/all",
         responseTime: 750,
         responseText: [
@@ -29,7 +29,7 @@ define([
                 color: 'banana'
             }
         ]
-    });
+    });*/
 
     // create calendar
     $mFakeServer.setHandler({
@@ -37,6 +37,15 @@ define([
         responseTime: 750,
         responseText: {
             _id: 4
+        }
+    });
+
+    // create event
+    $mFakeServer.setHandler({
+        url: "/api/calendar/event/create",
+        responseTime: 750,
+        responseText: {
+            _id: 10
         }
     });
 

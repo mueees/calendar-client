@@ -11,7 +11,9 @@ define([
 
             this.calendars = options.calendars;
 
-            this.event = new EventModel();
+            this.event = new EventModel({
+                calendarId: this.calendars.first().get('_id')
+            });
 
             this.view = new AddView({
                 model: this.event,
