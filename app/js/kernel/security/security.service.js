@@ -35,7 +35,7 @@ define([
         var auth = isAuth();
 
         if (auth) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + auth.token);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + auth.client_token);
         }
     });
 

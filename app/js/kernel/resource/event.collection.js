@@ -5,12 +5,12 @@ define([
     return BaseCollection.extend(
         {
             _api: {
-                get: '/api/calendar/event/get'
+                find: '/api/calendar/event/find'
             },
 
             model: EventModel,
 
-            _get: function (options) {
+            _find: function (options) {
                 var deferred = $.Deferred();
 
                 this.fetch({
@@ -35,8 +35,8 @@ define([
             }
         },
         {
-            get: function (options) {
-                return (new this())._get(options);
+            find: function (options) {
+                return (new this())._find(options);
             }
         }
     );

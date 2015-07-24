@@ -32,13 +32,13 @@ define([
                 calendars: this.calendars
             });
 
-            this.listenTo(this.agendaModel, 'change:start change:end', this._getEvents);
+            this.listenTo(this.agendaModel, 'change:start change:end', this._findEvents);
 
-            this._getEvents();
+            this._findEvents();
         },
 
-        _getEvents: function () {
-            EventCollection.get({
+        _findEvents: function () {
+            EventCollection.find({
                 start: this.agendaModel.get('start'),
                 end: this.agendaModel.get('end'),
                 calendarIds: _.map(this.calendars.toJSON(), '_id')

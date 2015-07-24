@@ -4,7 +4,8 @@ require([
     'clientCore/notify/notify.service',
     'clientCore/modal/modal.service',
     'kernel/security/security.service',
-    'kernel/fake-server/fake-server.service',
+    'kernel/ajax/ajax.service',
+    /*'kernel/fake-server/fake-server.service',*/
 
     //screens
     'screens/sign/module',

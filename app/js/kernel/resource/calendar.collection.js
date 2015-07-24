@@ -1,10 +1,11 @@
 define([
+    'config/app',
     './calendar.model',
     'clientCore/resource/base.collection'
-], function (CalendarModel, BaseCollection) {
+], function (config, CalendarModel, BaseCollection) {
     return BaseCollection.extend({
         _api: {
-            all: '/api/calendar/calendar/all'
+            all: config.proxy.origin + '/api/calendar/calendar/all'
         },
 
         model: CalendarModel,

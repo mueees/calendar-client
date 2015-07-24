@@ -19,8 +19,10 @@ define([
             this.calendars = options.calendars;
         },
 
-        childViewOptions: {
-            calendars: this.calendars
+        childViewOptions: function () {
+            return {
+                calendars: this.calendars
+            }
         }
     });
 });
