@@ -17,6 +17,7 @@ define([
             _.bindAll(this, '_rebuildAgendaModel');
 
             this.region = options.region;
+
             this.calendars = options.calendars;
 
             this.agendaModel = new Backbone.Model({
@@ -27,7 +28,8 @@ define([
 
             this.view = new AgendaView({
                 model: this.agendaModel,
-                collection: this.agendaModel.get('days')
+                collection: this.agendaModel.get('days'),
+                calendars: this.calendars
             });
 
             this.listenTo(this.agendaModel, 'change:start change:end', this._getEvents);

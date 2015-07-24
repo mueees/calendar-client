@@ -15,8 +15,12 @@ define([
             'click [data-link="newEvent"]': "onNewEventHandler"
         },
 
-        initialize: function () {
+        initialize: function (options) {
+            options = options || {};
+
             this.listenTo(this.model, 'change:events', this.render);
+
+            this.calendars = options.calendars;
         },
 
         serializeData: function () {
@@ -50,7 +54,8 @@ define([
             var addEvent = new AddEvent({
                 region: new Marionette.Region({
                     el: this.$el.find('.new-event-region')
-                })
+                }),
+                calendars: this.calendars
             });
 
             addEvent.show();

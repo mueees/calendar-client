@@ -11,6 +11,16 @@ define([
 
         childView: DayView,
 
-        childViewContainer: ".mue-agenda-days"
+        childViewContainer: ".mue-agenda-days",
+
+        initialize: function (options) {
+            options = options || {};
+
+            this.calendars = options.calendars;
+        },
+
+        childViewOptions: {
+            calendars: this.calendars
+        }
     });
 });

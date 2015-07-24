@@ -19,6 +19,19 @@ define([
             }
         },
 
+        initialize: function (options) {
+            options = options || {};
+
+            this.calendars = options.calendars;
+        },
+
+        serializeData: function () {
+            return {
+                event: this.model.toJSON(),
+                calendars: this.calendars.toJSON()
+            }
+        },
+
         onShow: function () {
             this.$el.find('input').focus();
         }
