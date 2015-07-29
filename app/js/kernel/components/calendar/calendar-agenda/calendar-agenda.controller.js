@@ -39,16 +39,25 @@ define([
         },
 
         _findEvents: function () {
-            EventCollection.find({
-                start: this.agendaModel.get('start'),
-                end: this.agendaModel.get('end'),
-                calendarIds: _.map(_.where(this.calendars.toJSON(), {active: true}), '_id')
-            }).then(this._rebuildAgendaModel);
+            var calendarIds = _.map(_.where(this.calendars.toJSON(), {active: true}), '_id');
+
+            if (calendarIds.length) {
+                EventCollection.find({
+                    start: this.agendaModel.get('start'),
+                    end: this.agendaModel.get('end'),
+                    calendarIds: calendarIds
+                }).then(this._rebuildAgendaModel);
+            } else {
+                this._rebuildAgendaModel();
+            }
         },
 
         _rebuildAgendaModel: function (eventCollection) {
             var days = this._generateDays(this.agendaModel.get('start'), this.agendaModel.get('end'));
-            this._populateData(days, eventCollection, this.calendars);
+
+            if (eventCollection) {
+                this._populateData(days, eventCollection, this.calendars);
+            }
 
             this.agendaModel.get('days').reset(days);
         },

@@ -16,7 +16,8 @@ define([
 
         _urls: {
             create: config.proxy.origin + '/api/calendar/calendar/create',
-            remove: config.proxy.origin + '/api/calendar/calendar/delete'
+            remove: config.proxy.origin + '/api/calendar/calendar/delete',
+            edit: config.proxy.origin + '/api/calendar/calendar/edit'
         },
 
         validation: {
@@ -42,6 +43,19 @@ define([
                 type: 'POST',
                 data: JSON.stringify({
                     _id: this.get('_id')
+                })
+            });
+        },
+
+        toggleActive: function () {
+            this.set('active', !this.get('active'));
+
+            this.fetch({
+                type: 'POST',
+                url: this._urls.edit,
+                data: JSON.stringify({
+                    _id: this.get('_id'),
+                    active:this.get('active')
                 })
             });
         }

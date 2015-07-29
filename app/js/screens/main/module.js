@@ -80,7 +80,7 @@ define([
                     endDate = $mHelper.date.convertStringDate(endDate);
 
                     // initialize date periods
-                    var groupButtonModel = new Backbone.Model({
+                    /*var groupButtonModel = new Backbone.Model({
                             active: (period || period === 0) ? period : 1,
                             items: [
                                 {
@@ -105,7 +105,7 @@ define([
                             model: groupButtonModel
                         });
 
-                    layout.getRegion('datePeriod').show(groupButtonView);
+                    layout.getRegion('datePeriod').show(groupButtonView);*/
 
                     // initialize date switcher
                     var dateSwitcherType = _getSwitcherType(period) || 1;
@@ -165,9 +165,15 @@ define([
                     calendarManager.show();
 
                     // listeners
-                    this.listenTo(groupButtonModel, 'change:active', function (model, period) {
-                        dateSwitcherModel.set('type', _getSwitcherType(Number(period)));
+                    this.listenTo(dateSwitcherModel, 'change:start change:end', function (model) {
+                        calendarAgendaComponent.setDate({
+                            start: model.get('start'),
+                            end: model.get('end')
+                        })
                     });
+                    /*this.listenTo(groupButtonModel, 'change:active', function (model, period) {
+                        dateSwitcherModel.set('type', _getSwitcherType(Number(period)));
+                    });*/
                 }
             });
 

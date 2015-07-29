@@ -28,7 +28,7 @@ define([
         },
 
         _onClickHandler: function () {
-            this.model.set('active', !this.model.get('active'));
+            this.model.toggleActive();
         },
 
         _onRemoveHandler: function (e) {

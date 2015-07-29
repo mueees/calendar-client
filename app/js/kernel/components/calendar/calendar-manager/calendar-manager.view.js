@@ -8,6 +8,8 @@ define([
             'click [data-link="new"]': 'newCalendar'
         },
 
+        className: 'mue-calendar-manager',
+
         template: _.template(template),
 
         childView: CalendarManagerItemView,
