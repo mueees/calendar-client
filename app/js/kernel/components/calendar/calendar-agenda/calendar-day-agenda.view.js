@@ -59,7 +59,10 @@ define([
                 region: new Marionette.Region({
                     el: this.$el.find('.new-event-region')
                 }),
-                calendars: this.calendars
+                calendars: this.calendars,
+                event: {
+                    start: this.model.get('date')
+                }
             });
 
             addEvent.show();

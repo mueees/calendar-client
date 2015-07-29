@@ -1,11 +1,12 @@
 define([
+    'config/app',
     './event.model',
     'clientCore/resource/base.collection'
-], function (EventModel, BaseCollection) {
+], function (config, EventModel, BaseCollection) {
     return BaseCollection.extend(
         {
             _api: {
-                find: '/api/calendar/event/find'
+                find: config.proxy.origin + '/api/calendar/event/find'
             },
 
             model: EventModel,
@@ -14,7 +15,7 @@ define([
                 var deferred = $.Deferred();
 
                 this.fetch({
-                    url: this._api.get,
+                    url: this._api.find,
                     type: 'POST',
                     data: JSON.stringify(options),
                     success: function (collection) {

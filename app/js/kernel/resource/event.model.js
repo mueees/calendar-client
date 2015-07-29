@@ -1,7 +1,10 @@
 define([
+    'config/app',
     'clientCore/resource/base.model'
-], function (BaseModel) {
+], function (config, BaseModel) {
     return BaseModel.extend({
+        idAttribute: '_id',
+        
         defaults: {
             title: '',
             description: '',
@@ -13,7 +16,7 @@ define([
         },
 
         _urls: {
-            create: '/api/calendar/event/create'
+            create: config.proxy.origin + '/api/calendar/event/create'
         },
 
         validation: {

@@ -33,6 +33,7 @@ define([
             });
 
             this.listenTo(this.agendaModel, 'change:start change:end', this._findEvents);
+            this.listenTo(this.calendars, 'change:active', this._findEvents);
 
             this._findEvents();
         },
@@ -41,7 +42,7 @@ define([
             EventCollection.find({
                 start: this.agendaModel.get('start'),
                 end: this.agendaModel.get('end'),
-                calendarIds: _.map(this.calendars.toJSON(), '_id')
+                calendarIds: _.map(_.where(this.calendars.toJSON(), {active: true}), '_id')
             }).then(this._rebuildAgendaModel);
         },
 

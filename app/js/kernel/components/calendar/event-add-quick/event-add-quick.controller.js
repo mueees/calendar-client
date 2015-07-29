@@ -8,13 +8,13 @@ define([
             options = options || {};
 
             this.region = options.region;
-
             this.calendars = options.calendars;
 
-            this.event = new EventModel({
-                calendarId: this.calendars.first().get('_id')
-            });
+            var event = options.event || {};
 
+            event.calendarId = this.calendars.first().get('_id');
+
+            this.event = new EventModel(event);
             this.view = new AddView({
                 model: this.event,
                 calendars: this.calendars

@@ -145,7 +145,7 @@ define([
                     dateSwitcherComponent.show();
 
                     // initialize agenda
-                    /*var calendarAgendaComponent = new CalendarAgendaComponent({
+                    var calendarAgendaComponent = new CalendarAgendaComponent({
                         region: layout.getRegion('calendar'),
                         calendars: options.resolve.calendars,
                         date: {
@@ -154,7 +154,7 @@ define([
                         }
                     });
 
-                    calendarAgendaComponent.show();*/
+                    calendarAgendaComponent.show();
 
                     // initialize calendar manager
                     var calendarManager = new CalendarManager({
