@@ -9,7 +9,8 @@ require([
 
     //screens
     'screens/sign/module',
-    'screens/main/module'
+    'screens/main/module',
+    'screens/event/event.module'
 ], function (App, $, $mNotify, $mModal, $mSecurity) {
     $mNotify.setContainer($('.mue-notify'));
 

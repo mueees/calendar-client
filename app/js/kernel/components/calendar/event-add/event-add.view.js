@@ -1,6 +1,6 @@
 define([
     'clientCore/components/base/view/form.view',
-    'text!./event-add-quick.view.html'
+    'text!./event-add.view.html'
 ], function (FormView, template) {
     return FormView.extend({
         template: _.template(template),
@@ -10,7 +10,6 @@ define([
         triggers: {
             'submit': 'create',
             'click [data-link="create"]' : 'create',
-            'click [data-link="edit"]' : 'edit',
             'click [data-link="cancel"]' : 'cancel'
         },
 
@@ -20,6 +19,12 @@ define([
             },
             '[name=calendarId]': {
                 observe: 'calendarId'
+            },
+            '[name=description]': {
+                observe: 'description'
+            },
+            '[name=isAllDay]': {
+                observe: 'isAllDay'
             }
         },
 

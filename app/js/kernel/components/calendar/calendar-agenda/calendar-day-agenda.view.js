@@ -44,6 +44,8 @@ define([
                 }
             });
 
+            model.today = momentDate.format('Do dddd, MMMM YYYY') == moment(new Date()).format('Do dddd, MMMM YYYY');
+
             return model;
         },
 

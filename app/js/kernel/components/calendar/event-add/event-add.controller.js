@@ -1,7 +1,7 @@
 define([
     'app',
     'marionette',
-    './event-add-quick.view',
+    './event-add.view',
     'kernel/resource/event.model'
 ], function (App, Marionette, AddView, EventModel) {
     return Marionette.Object.extend({
@@ -16,13 +16,13 @@ define([
             event.calendarId = this.calendars.first().get('_id');
 
             this.event = new EventModel(event);
+
             this.view = new AddView({
                 model: this.event,
                 calendars: this.calendars
             });
 
             this.listenTo(this.view, 'create', this._onCreateHandler);
-            this.listenTo(this.view, 'edit', this._onEditHandler);
             this.listenTo(this.view, 'cancel', this._onCancelHandler);
         },
 
@@ -49,13 +49,6 @@ define([
 
         _onCancelHandler: function () {
             this.region.reset();
-        },
-
-        _onEditHandler: function () {
-            App.navigate('#event/create', {
-                trigger: true,
-                event: this.event
-            });
         },
 
         show: function () {

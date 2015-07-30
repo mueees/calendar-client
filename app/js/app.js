@@ -31,6 +31,7 @@ define([
 
     App.startSubApp = function (appName, args) {
         var currentApp = App.module(appName);
+
         if (App.currentApp === currentApp) {
             return;
         }
@@ -42,6 +43,7 @@ define([
         }
 
         App.currentApp = currentApp;
+
         currentApp.start(args);
     };
 
