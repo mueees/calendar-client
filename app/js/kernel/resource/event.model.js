@@ -45,6 +45,8 @@ define([
         },
 
         create: function () {
+            var model = this.toJSON();
+
             return this.fetch({
                 type: "POST",
                 url: this._urls.create,

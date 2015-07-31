@@ -19,6 +19,8 @@ requirejs.config({
         bootstrap: '../vendor/bootstrap/dist/js/bootstrap',
         'hbs': '../vendor/handlebars-0.11.2/handlebars',
         mockajax: '../vendor/jquery-mockjax-2.0.0-beta/mockajax',
+        datepicker: '../vendor/bootstrap-datepicker/bootstrap-datepicker',
+        timepicker: '../vendor/jquery-timepicker/jquery-timepicker',
 
         underscore: "../vendor/underscore-1.8.3/underscore",
         jquery: "../vendor/jquery/dist/jquery",
@@ -40,6 +42,8 @@ requirejs.config({
             exports: "_"
         },
         bootstrap: ['jquery'],
+        datepicker: ['jquery'],
+        timepicker: ['jquery'],
         mockajax: {
             deps: ['jquery'],
             exports: "jQuery"

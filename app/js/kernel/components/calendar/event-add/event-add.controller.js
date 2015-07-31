@@ -14,6 +14,9 @@ define([
             var event = options.event || {};
 
             event.calendarId = this.calendars.first().get('_id');
+            event.isAllDay = event.isAllDay || true;
+            event.isRepeat = event.isRepeat || false;
+            event.repeatType = event.repeatType || 1;
 
             this.event = new EventModel(event);
 

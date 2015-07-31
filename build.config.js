@@ -43,9 +43,14 @@ module.exports = {
             'app/vendor/storage/storage.js',
             'app/vendor/mue-proxy/mue-proxy.js',
             'app/vendor/moment-2.10.3/moment.js',
+            'app/vendor/bootstrap-datepicker/bootstrap-datepicker.js',
+            'app/vendor/jquery-timepicker/jquery-timepicker.js',
             'app/vendor/client-core/js/**/*'
         ],
-        css: [],
+        css: [
+            'app/vendor/bootstrap-datepicker/bootstrap-datepicker.css',
+            'app/vendor/jquery-timepicker/jquery-timepicker.css'
+        ],
         fonts: [],
         assets: []
     },

@@ -1,15 +1,25 @@
 <form>
     <div class="mue-form-group-content">
         <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-banana btn-action btn-sm" data-link="create"><i
+                            class="fa fa-plus mue-icon"></i>Create
+                    </button>
+                    <button type="button" class="btn btn-neutral" data-link="cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
                     <div class="form-control-icon">
-                        <input type="text" name="title" class="form-control" placeholder="Title"">
+                        <input type="text" name="title" class="form-control" placeholder="Title">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-control-icon">
-                        <input type="text" name="title" class="form-control" placeholder="Description">
+                        <input type="text" name="description" class="form-control" placeholder="Description">
                     </div>
                 </div>
                 <div class="form-group">
@@ -19,36 +29,52 @@
                         <% }) %>
                     </select>
                 </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input name="isAllDay" type="checkbox"> all day ?
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input name="isRepeat" type="checkbox"> is repeat ?
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="form-group clearfix">
-        <div class="pull-left">
-            <button type="button" class="btn btn-neutral" data-link="cancel">Cancel</button>
-        </div>
-        <div class="pull-right">
-            <button type="submit" class="btn btn-banana btn-action btn-sm" data-link="create"><i
-                    class="fa fa-plus mue-icon"></i>Create
-            </button>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input name="isRepeat" type="checkbox"> Repeat
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group" data-el="is-repeat-region">
+                    <div class="form-group">
+                        <select name="repeatType">
+                            <option value="1">Daily</option>
+                            <option value="2">Every week day</option>
+                            <option value="3">Weekly</option>
+                            <option value="4">Monthly</option>
+                            <option value="5">Yearly</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input data-el="end-date-checker" name="ends" type="checkbox"> Ends
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" data-el="end-date-picker-region"></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="form-group" data-el="date-picker-region"></div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input name="isAllDay" type="checkbox"> All day
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group" data-el="all-day-region">
+                    <div class="form-group" data-el="time-start-picker-region"></div>
+                    <div class="form-group" data-el="time-end-picker-region"></div>
+                </div>
+            </div>
         </div>
     </div>
 
