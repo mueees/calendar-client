@@ -83,7 +83,7 @@ define([
                     el: this.ui.datePicker
                 }),
                 settings: {
-                    label: 'Date'
+                    label: ' '
                 }
             });
             this.datePicker.show();
@@ -111,7 +111,7 @@ define([
                     el: this.ui.startTimePicker
                 }),
                 settings: {
-                    label: 'Start time',
+                    label: ' ',
                     timepicker: {
                         step: 30
                     }
@@ -128,7 +128,7 @@ define([
                     el: this.ui.endTimePicker
                 }),
                 settings: {
-                    label: 'End time',
+                    label: ' ',
                     timepicker: {
                         step: 30
                     }
@@ -148,9 +148,9 @@ define([
 
         _onAllDayHandler: function () {
             if (this.model.get('isAllDay')) {
-                this.ui.allDay.addClass('hidden');
+                //this.ui.allDay.addClass('hidden');
             } else {
-                this.ui.allDay.removeClass('hidden');
+                //this.ui.allDay.removeClass('hidden');
             }
         },
 

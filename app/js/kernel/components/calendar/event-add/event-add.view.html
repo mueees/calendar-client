@@ -11,17 +11,27 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <div class="form-group">
                     <div class="form-control-icon">
                         <input type="text" name="title" class="form-control" placeholder="Title">
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="form-control-icon">
-                        <input type="text" name="description" class="form-control" placeholder="Description">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <div class="form-group" data-el="date-picker-region"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group" data-el="all-day-region">
+                            <div class="form-group pull-left" data-el="time-start-picker-region"></div>
+                            to
+                            <div class="form-group pull-left" data-el="time-end-picker-region"></div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <select name="calendarId">
                         <% _.each(calendars, function(calendar){ %>
@@ -32,11 +42,19 @@
 
                 <div class="form-group">
                     <div class="checkbox">
-                        <label>
-                            <input name="isRepeat" type="checkbox"> Repeat
-                        </label>
+                        <div>
+                            <label>
+                                <input name="isAllDay" type="checkbox"> All day
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input name="isRepeat" type="checkbox"> Repeat
+                            </label>
+                        </div>
                     </div>
                 </div>
+
                 <div class="form-group" data-el="is-repeat-region">
                     <div class="form-group">
                         <select name="repeatType">
@@ -57,22 +75,6 @@
                     </div>
 
                     <div class="form-group" data-el="end-date-picker-region"></div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <div class="form-group" data-el="date-picker-region"></div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input name="isAllDay" type="checkbox"> All day
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group" data-el="all-day-region">
-                    <div class="form-group" data-el="time-start-picker-region"></div>
-                    <div class="form-group" data-el="time-end-picker-region"></div>
                 </div>
             </div>
         </div>
