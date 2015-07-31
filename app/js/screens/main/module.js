@@ -133,7 +133,7 @@ define([
                     }
 
                     var dateSwitcherModel = new Backbone.Model({
-                            type: dateSwitcherType,
+                            type: 2 || dateSwitcherType,
                             start: startDate || new Date(),
                             end: endDate || moment(new Date()).add(7, 'd').toDate()
                         }),
@@ -169,7 +169,7 @@ define([
                         calendarAgendaComponent.setDate({
                             start: model.get('start'),
                             end: model.get('end')
-                        })
+                        });
                     });
                     /*this.listenTo(groupButtonModel, 'change:active', function (model, period) {
                         dateSwitcherModel.set('type', _getSwitcherType(Number(period)));

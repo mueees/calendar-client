@@ -1,9 +1,10 @@
 define([
     'app',
     'marionette',
+    'moment',
     './event-add.view',
     'kernel/resource/event.model'
-], function (App, Marionette, AddView, EventModel) {
+], function (App, Marionette, moment, AddView, EventModel) {
     return Marionette.Object.extend({
         initialize: function (options) {
             options = options || {};
@@ -14,9 +15,11 @@ define([
             var event = options.event || {};
 
             event.calendarId = this.calendars.first().get('_id');
-            event.isAllDay = event.isAllDay || true;
+            event.isAllDay = event.isAllDay || false;
             event.isRepeat = event.isRepeat || false;
             event.repeatType = event.repeatType || 1;
+            event.start = event.start || new Date();
+            event.end = event.end || moment(new Date()).add(1, 'hours').toDate();
 
             this.event = new EventModel(event);
 
@@ -39,7 +42,7 @@ define([
 
             if (this.event.isValid(true)) {
                 this.event.create().then(function () {
-                    me.trigger('create', me.event);
+                    me.trigger('mue:create', me.event);
                     me.region.reset();
                 });
             } else {
@@ -52,6 +55,7 @@ define([
 
         _onCancelHandler: function () {
             this.region.reset();
+            this.trigger('mue:cancel');
         },
 
         show: function () {

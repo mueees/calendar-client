@@ -35,6 +35,18 @@ define([
             isRepeat: {
                 required: false
             },
+            repeatType: function () {
+                if( this.get('isRepeat') && !this.get('repeatType') ){
+                    return 'Repeated type should exists';
+                }
+            },
+            repeatDays: function () {
+                var model = this.toJSON();
+
+                if( model.isRepeat && model.repeatType == 2 && (!model.repeatDays || !model.repeatDays.length) ){
+                    return 'Repeated days should exists';
+                }
+            },
             calendarId: {
                 required: true
             }
@@ -45,20 +57,33 @@ define([
         },
 
         create: function () {
-            var model = this.toJSON();
+            var model = this.toJSON(),
+                data = {
+                    title: model.title,
+                    description: model.description,
+                    start: model.start,
+                    end: model.end,
+                    isAllDay: model.isAllDay,
+                    calendarId: model.calendarId,
+                    isRepeat: model.isRepeat
+                };
+
+            if( model.isRepeat ){
+                data.repeatType = model.repeatType;
+
+                if( model.repeatType == 2 ){
+                    data.repeatDays = model.repeatDays;
+                }
+
+                if(model.repeatEnd){
+                    data.repeatEnd = model.repeatEnd;
+                }
+            }
 
             return this.fetch({
                 type: "POST",
                 url: this._urls.create,
-                data: JSON.stringify({
-                    title: this.get('title'),
-                    description: this.get('description'),
-                    start: this.get('start'),
-                    end: this.get('end'),
-                    isAllDay: this.get('isAllDay'),
-                    calendarId: this.get('calendarId'),
-                    isRepeat: this.get('isRepeat')
-                })
+                data: JSON.stringify(data)
             });
         }
     });

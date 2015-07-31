@@ -30,8 +30,8 @@ define([
 
             this.time = this.ui.time.datepicker(datePickerSettings);
 
-            this.time.on('changeTime', function () {
-                me.model.set('time', me.time.datepicker('getTime'));
+            this.time.on('changeDate', function () {
+                me.model.set('time', me.time.datepicker('getDate'));
             });
 
             this.time.datepicker('setDate', me.model.get('time'));

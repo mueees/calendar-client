@@ -15,6 +15,8 @@ define([
         initialize: function (options) {
             options = options || {};
             options.settings = options.settings || {};
+
+            this.listenTo(this.model, 'change:disabled', this._onDisableHandler);
         },
 
         onShow: function () {
@@ -33,6 +35,12 @@ define([
             });
 
             this.time.timepicker('setTime', me.model.get('time'));
+
+            this.model.set('time', this.time.timepicker('getTime'));
+        },
+
+        _onDisableHandler: function () {
+            this.ui.time.prop('disabled', this.model.get('disabled'));
         }
     });
 });

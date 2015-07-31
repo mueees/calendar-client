@@ -1,17 +1,19 @@
 define([
     'marionette',
+    'moment',
     'clientCore/components/base/view/form.view',
     'text!./event-add.view.html',
     'clientCore/components/time-picker/time-picker.controller',
     'clientCore/components/date-picker/date-picker.controller'
-], function (Marionette, FormView, template, TimePicker, DatePicker) {
+], function (Marionette, moment, FormView, template, TimePicker, DatePicker) {
     return FormView.extend({
         template: _.template(template),
 
-        className: 'panel mue-panel mue-form-panel',
+        className: 'panel mue-panel mue-form-panel mue-event-add',
 
         events: {
-            'click [data-el="end-date-checker"]': '_onEndDateCheckerHandler'
+            'click [data-el="end-date-checker"]': '_onEndDateCheckerHandler',
+            'click [data-el="repeat-days-region"]': '_onRepeatDaysCheckerHandler'
         },
 
         triggers: {
@@ -23,6 +25,7 @@ define([
         ui: {
             title: '[name="title"]',
             allDay: '[data-el="all-day-region"]',
+            repeatDays: '[data-el="repeat-days-region"]',
             datePicker: '[data-el="date-picker-region"]',
             endDatePicker: '[data-el="end-date-picker-region"]',
             endDateChecker: '[data-el="end-date-checker"]',
@@ -53,6 +56,8 @@ define([
         },
 
         initialize: function (options) {
+            FormView.prototype.initialize.apply(this, arguments);
+
             options = options || {};
 
             this.calendars = options.calendars;
@@ -87,8 +92,25 @@ define([
                 }
             });
             this.datePicker.show();
-            this.listenTo(this.datePicker, 'rx:change:time', function (time) {
-                me.model.set('date', date);
+            this.listenTo(this.datePicker, 'mue:change:time', function (time) {
+                var momentTime = moment(time),
+                    newStart = moment(me.model.get('start'))
+                        .set({
+                            year: momentTime.year(),
+                            month: momentTime.month(),
+                            date: momentTime.date()
+                        }).toDate(),
+                    newEnd = moment(me.model.get('end'))
+                        .set({
+                            year: momentTime.year(),
+                            month: momentTime.month(),
+                            date: momentTime.date()
+                        }).toDate();
+
+                me.model.set({
+                    start: newStart,
+                    end: newEnd
+                });
             });
 
             // init end-date-picker
@@ -101,7 +123,7 @@ define([
                 }
             });
             this.endDatePicker.show();
-            this.listenTo(this.endDatePicker, 'rx:change:time', function (date) {
+            this.listenTo(this.endDatePicker, 'mue:change:time', function (date) {
                 me.model.set('repeatEnd', date);
             });
 
@@ -117,10 +139,18 @@ define([
                     }
                 }
             });
-            this.startTimePicker.show();
             this.listenTo(this.startTimePicker, 'mue:change:time', function (time) {
-                me.model.set('start', time);
+                var momentTime = moment(time),
+                    newTime = moment(me.model.get('start'))
+                        .set({
+                            hour: momentTime.hours(),
+                            minute: momentTime.minutes()
+                        }).toDate();
+
+                me.model.set('start', newTime);
             });
+            this.startTimePicker.setTime(this.model.get('start'));
+            this.startTimePicker.show();
 
             // init end time picker
             this.endTimePicker = new TimePicker({
@@ -134,23 +164,34 @@ define([
                     }
                 }
             });
-            this.endTimePicker.show();
             this.listenTo(this.endTimePicker, 'mue:change:time', function (time) {
-                me.model.set('end', time);
+                var momentTime = moment(time),
+                    newTime = moment(me.model.get('end'))
+                        .set({
+                            hour: momentTime.hours(),
+                            minute: momentTime.minutes()
+                        }).toDate();
+
+                me.model.set('end', newTime);
             });
+            this.endTimePicker.setTime(this.model.get('end'));
+            this.endTimePicker.show();
 
             this._onAllDayHandler();
             this._onRepeatHandler();
             this._onEndDateCheckerHandler();
+            this._onRepeatTypeHandler();
 
             this.ui.title.focus();
         },
 
         _onAllDayHandler: function () {
             if (this.model.get('isAllDay')) {
-                //this.ui.allDay.addClass('hidden');
+                this.startTimePicker.disable();
+                this.endTimePicker.disable();
             } else {
-                //this.ui.allDay.removeClass('hidden');
+                this.startTimePicker.enable();
+                this.endTimePicker.enable();
             }
         },
 
@@ -167,16 +208,34 @@ define([
                 this.endDatePicker.enable();
             } else {
                 this.endDatePicker.disable();
+                this.model.set('repeatEnd', null);
             }
         },
 
-        _onRepeatTypeHandler: function () {
-            switch (this.model.get('repeatType')) {
-                case 3:
-                    break;
-                default:
+        _setAllRepeatDays: function () {
+            var repeatDays = [];
 
-                    break;
+            _.each(this.ui.repeatDays.find('input'), function ($day) {
+                if( $day.checked ){
+                    repeatDays.push($day.value);
+                }
+            });
+
+            this.model.set('repeatDays', repeatDays);
+        },
+
+        _onRepeatDaysCheckerHandler: function () {
+            this._setAllRepeatDays();
+        },
+
+        _onRepeatTypeHandler: function () {
+            var repeatType = this.model.get('repeatType');
+
+            if(repeatType && repeatType == 2){
+                // this is weekly type, user should choose repeat days
+                this.ui.repeatDays.removeClass('hidden');
+            }else{
+                this.ui.repeatDays.addClass('hidden');
             }
         }
     });

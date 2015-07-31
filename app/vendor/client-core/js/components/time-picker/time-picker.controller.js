@@ -13,16 +13,29 @@ define([
 
             this.model = new Backbone.Model({
                 time: new Date(),
-                label: this.options.settings.label || 'Choose time'
+                label: this.options.settings.label || 'Choose time',
+                disabled: false
             });
 
-            this.listenTo(this.model, 'change', function(){
+            this.listenTo(this.model, 'change:time', function(){
                 me.trigger('mue:change:time', me.model.get('time'));
             });
         },
 
         getTime: function () {
             return this.model.get('time');
+        },
+
+        setTime: function (time) {
+            this.model.set('time', time);
+        },
+
+        enable: function () {
+            this.model.set('disabled', false);
+        },
+
+        disable: function () {
+            this.model.set('disabled', true);
         },
 
         show: function () {

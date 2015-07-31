@@ -34,6 +34,10 @@ define([
             this.model.set('disabled', true);
         },
 
+        setTime: function (time) {
+            this.model.set('time', time);
+        },
+
         show: function () {
             this.view = new View({
                 model: this.model,

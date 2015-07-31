@@ -87,6 +87,18 @@ define([
                     });
 
                     addEventController.show();
+
+                    this.listenTo(addEventController, 'mue:cancel', function () {
+                        App.navigate("#main", {
+                            trigger: true
+                        });
+                    });
+
+                    this.listenTo(addEventController, 'mue:create', function () {
+                        App.navigate("#main", {
+                            trigger: true
+                        });
+                    });
                 }
             });
 
