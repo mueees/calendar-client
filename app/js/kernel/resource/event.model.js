@@ -16,7 +16,8 @@ define([
         },
 
         _urls: {
-            create: config.proxy.origin + '/api/calendar/event/create'
+            create: config.proxy.origin + '/api/calendar/event/create',
+            remove: config.proxy.origin + '/api/calendar/event/delete'
         },
 
         validation: {
@@ -84,6 +85,18 @@ define([
                 type: "POST",
                 url: this._urls.create,
                 data: JSON.stringify(data)
+            });
+        },
+
+        remove: function () {
+            var model = this.toJSON();
+
+            return this.fetch({
+                type: "POST",
+                url: this._urls.remove,
+                data: JSON.stringify({
+                    _id: (model.rawId) ? model.rawId : model._id
+                })
             });
         }
     });

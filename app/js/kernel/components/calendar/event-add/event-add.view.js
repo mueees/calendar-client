@@ -65,11 +65,6 @@ define([
             this.listenTo(this.model, 'change:isAllDay', this._onAllDayHandler);
             this.listenTo(this.model, 'change:isRepeat', this._onRepeatHandler);
             this.listenTo(this.model, 'change:repeatType', this._onRepeatTypeHandler);
-            this.listenTo(this.model, 'change', this.__displayModel);
-        },
-
-        __displayModel: function () {
-            console.log(this.model.toJSON());
         },
 
         serializeData: function () {

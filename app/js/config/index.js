@@ -4,6 +4,7 @@ requirejs.config({
         clientCore: '../vendor/client-core/js',
         'mue-proxy': '../vendor/mue-proxy/mue-proxy',
 
+        lodash: '../vendor/lodash/lodash',
         moment: '../vendor/moment-2.10.3/moment',
         marionette: '../vendor/marionette/marionette',
         backbone: "../vendor/backbone/backbone",

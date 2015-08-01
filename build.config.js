@@ -41,6 +41,7 @@ module.exports = {
             'app/vendor/backbone/backbone.validation.js',
             'app/vendor/backbone/backbone.wreqr.js',
             'app/vendor/storage/storage.js',
+            'app/vendor/lodash/lodash.js',
             'app/vendor/mue-proxy/mue-proxy.js',
             'app/vendor/moment-2.10.3/moment.js',
             'app/vendor/bootstrap-datepicker/bootstrap-datepicker.js',
