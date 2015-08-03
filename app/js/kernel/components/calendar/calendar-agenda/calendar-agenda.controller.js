@@ -1,11 +1,13 @@
 define([
+    'app',
     'marionette',
     'clientCore/channel/channel.service',
     './calendar-agenda.view',
     'kernel/resource/event.collection',
     'moment',
-    'underscore'
-], function (Marionette, $mChannel, AgendaView, EventCollection, moment, _) {
+    'underscore',
+    'kernel/event-storage/event-storage.service'
+], function (App, Marionette, $mChannel, AgendaView, EventCollection, moment, _, $mEventStorage) {
     var DayModel = Backbone.Model.extend({}),
         DayCollection = Backbone.Collection.extend({
             model: DayModel
@@ -36,6 +38,7 @@ define([
             this.listenTo(this.agendaModel, 'change:start', this._findEvents);
             this.listenTo(this.calendars, 'change:active', this._findEvents);
             this.listenTo($mChannel, 'mue:agenda-day:remove:repeat', this._findEvents);
+            this.listenTo($mChannel, 'mue:agenda-day:edit', this._editEventHandler);
 
             this._findEvents();
         },
@@ -122,6 +125,16 @@ define([
 
         show: function () {
             this.region.show(this.view);
+        },
+
+        _editEventHandler: function (event) {
+            $mEventStorage.setEditEvent(event);
+
+            var _id = event.get('rowId') || event.get('_id');
+
+            App.navigate('#event/edit/' + _id, {
+                trigger: true
+            });
         }
     });
 });

@@ -15,6 +15,7 @@ define([
         events: {
             'click [data-link="event"]': "onEventHandler",
             'click [data-link="remove"]': "onRemoveHandler",
+            'click [data-link="edit"]': "onEditHandler",
             'click [data-link="newEvent"]': "onNewEventHandler"
         },
 
@@ -79,11 +80,21 @@ define([
                     me.model.unset('events', {silent: true});
                     me.model.set('events', events);
 
-                    if( eventData.event.get('isRepeat') ){
+                    if (eventData.event.get('isRepeat')) {
                         $mChannel.trigger('mue:agenda-day:remove:repeat');
                     }
                 });
             });
+        },
+
+        onEditHandler: function (e) {
+            var _id = $(e.target).closest('.mue-calendar-agenda-event').attr('data-event-id'),
+                events = this.model.get('events'),
+                eventData = _.find(events, function (item) {
+                    return item.event.get('_id') == _id;
+                });
+
+            $mChannel.trigger('mue:agenda-day:edit', eventData.event);
         },
 
         onNewEventHandler: function () {
@@ -101,7 +112,7 @@ define([
                         }).toDate(),
                         isAllDay: true
                     }
-            });
+                });
 
             addEvent.show();
 

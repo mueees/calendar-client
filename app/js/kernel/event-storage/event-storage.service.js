@@ -1,12 +1,22 @@
 define([], function () {
     var cache = {
-        newEvent: null
+        newEvent: null,
+        editEvent: null
     };
 
     function resetCache() {
         cache = {
-            newEvent: null
+            newEvent: null,
+            editEvent: null
         }
+    }
+
+    function setEditEvent(event) {
+        cache.editEvent = event;
+    }
+
+    function getEditEvent(event) {
+        return cache.editEvent;
     }
 
     function setNewEvent(event) {
@@ -20,6 +30,8 @@ define([], function () {
     return {
         setNewEvent: setNewEvent,
         getNewEvent: getNewEvent,
+        setEditEvent: setEditEvent,
+        getEditEvent: getEditEvent,
         resetCache: resetCache
     }
 });

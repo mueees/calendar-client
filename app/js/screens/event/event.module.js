@@ -10,8 +10,9 @@ define([
     'kernel/event-storage/event-storage.service',
 
     // components
-    'kernel/components/calendar/event-add/event-add.controller'
-], function (App, Backbone, moment, _, BaseRouter, Layout, CalendarCollection, $mEventStorage, AddEventController) {
+    'kernel/components/calendar/event-add/event-add.controller',
+    'kernel/components/calendar/event-edit/event-edit.controller'
+], function (App, Backbone, moment, _, BaseRouter, Layout, CalendarCollection, $mEventStorage, AddEventController, EditEventController) {
     App.module('Apps.Event', {
         startWithParent: false,
 
@@ -19,11 +20,27 @@ define([
             var R = BaseRouter.extend({
                     appRoutes: {
                         'event/create': 'create',
-                        'event/edit': 'edit'
+                        'event/edit/:id': 'edit'
                     },
 
                     resolve: {
                         create: [
+                            {
+                                name: 'calendars',
+                                fn: function () {
+                                    var def = $.Deferred(),
+                                        calendars = new CalendarCollection();
+
+                                    calendars.all().then(function () {
+                                        def.resolve(calendars);
+                                    });
+
+                                    return def.promise();
+                                }
+                            }
+                        ],
+
+                        edit: [
                             {
                                 name: 'calendars',
                                 fn: function () {
@@ -70,7 +87,9 @@ define([
                                 controller.destroy();
                             }
 
-                            controller = new EditController(resolve);
+                            controller = new EditController({
+                                resolve: resolve
+                            });
                         }
                     }
                 }),
@@ -90,13 +109,7 @@ define([
 
                     addEventController.show();
 
-                    this.listenTo(addEventController, 'mue:cancel', function () {
-                        App.navigate("#main", {
-                            trigger: true
-                        });
-                    });
-
-                    this.listenTo(addEventController, 'mue:create', function () {
+                    this.listenTo(addEventController, 'mue:create mue:cancel', function () {
                         App.navigate("#main", {
                             trigger: true
                         });
@@ -105,8 +118,24 @@ define([
             });
 
             var EditController = Marionette.Object.extend({
-                initialize: function () {
-                    $('#body').html('<a href="#event/create">create</a><a href="#main">main</a>');
+                initialize: function (options) {
+                    var layout = new Layout();
+
+                    App.body.show(layout);
+
+                    var editEventController = new EditEventController({
+                        region: layout.getRegion('content'),
+                        calendars: options.resolve.calendars,
+                        event: $mEventStorage.getEditEvent()
+                    });
+
+                    editEventController.show();
+
+                    this.listenTo(editEventController, 'mue:cancel mue:edit', function () {
+                        App.navigate("#main", {
+                            trigger: true
+                        });
+                    });
                 }
             });
 
