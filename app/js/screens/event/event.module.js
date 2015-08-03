@@ -7,10 +7,11 @@ define([
 
     './layout.view',
     'kernel/resource/calendar.collection',
+    'kernel/event-storage/event-storage.service',
 
     // components
     'kernel/components/calendar/event-add/event-add.controller'
-], function (App, Backbone, moment, _, BaseRouter, Layout, CalendarCollection, AddEventController) {
+], function (App, Backbone, moment, _, BaseRouter, Layout, CalendarCollection, $mEventStorage, AddEventController) {
     App.module('Apps.Event', {
         startWithParent: false,
 
@@ -83,7 +84,8 @@ define([
 
                     var addEventController = new AddEventController({
                         region: layout.getRegion('content'),
-                        calendars: options.resolve.calendars
+                        calendars: options.resolve.calendars,
+                        event: $mEventStorage.getNewEvent()
                     });
 
                     addEventController.show();
@@ -103,13 +105,12 @@ define([
             });
 
             var EditController = Marionette.Object.extend({
-                initialize: function (options) {
+                initialize: function () {
                     $('#body').html('<a href="#event/create">create</a><a href="#main">main</a>');
                 }
             });
 
             Main.on('start', function (arg) {
-                console.log(arguments);
             });
 
             Main.on('stop', function () {

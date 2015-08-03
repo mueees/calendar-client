@@ -12,7 +12,7 @@ define([
             this.region = options.region;
 
             this.model = new Backbone.Model({
-                time: new Date(),
+                time: options.time || new Date(),
                 label: this.options.settings.label || 'Choose date',
                 disabled: false
             });

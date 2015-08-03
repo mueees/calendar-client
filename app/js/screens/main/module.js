@@ -18,8 +18,10 @@ define([
     'clientCore/helper/helper.service',
 
     // models
-    'kernel/resource/calendar.collection'
-], function (App, Backbone, moment, _, BaseRouter, MainLayout, $mLog, $mTitle, DateSwitcherComponent, CalendarAgendaComponent, CalendarManager, GroupButtonView, $mUrl, $mHelper, CalendarCollection) {
+    'kernel/resource/calendar.collection',
+    'kernel/event-storage/event-storage.service'
+], function (App, Backbone, moment, _, BaseRouter, MainLayout, $mLog, $mTitle, DateSwitcherComponent, CalendarAgendaComponent,
+             CalendarManager, GroupButtonView, $mUrl, $mHelper, CalendarCollection, $mEventStorage) {
     App.module('Apps.Main', {
         startWithParent: false,
 
@@ -81,31 +83,31 @@ define([
 
                     // initialize date periods
                     /*var groupButtonModel = new Backbone.Model({
-                            active: (period || period === 0) ? period : 1,
-                            items: [
-                                {
-                                    name: 'Day',
-                                    value: 1
-                                },
-                                {
-                                    name: 'Week',
-                                    value: 2
-                                },
-                                {
-                                    name: 'Month',
-                                    value: 3
-                                },
-                                {
-                                    name: 'Agenda',
-                                    value: 4
-                                }
-                            ]
-                        }),
-                        groupButtonView = new GroupButtonView({
-                            model: groupButtonModel
-                        });
+                     active: (period || period === 0) ? period : 1,
+                     items: [
+                     {
+                     name: 'Day',
+                     value: 1
+                     },
+                     {
+                     name: 'Week',
+                     value: 2
+                     },
+                     {
+                     name: 'Month',
+                     value: 3
+                     },
+                     {
+                     name: 'Agenda',
+                     value: 4
+                     }
+                     ]
+                     }),
+                     groupButtonView = new GroupButtonView({
+                     model: groupButtonModel
+                     });
 
-                    layout.getRegion('datePeriod').show(groupButtonView);*/
+                     layout.getRegion('datePeriod').show(groupButtonView);*/
 
                     // initialize date switcher
                     var dateSwitcherType = _getSwitcherType(period) || 1;
@@ -171,9 +173,17 @@ define([
                             end: model.get('end')
                         });
                     });
+                    this.listenTo(layout, 'create', function () {
+                        $mEventStorage.setNewEvent(null);
+
+                        App.navigate('#event/create', {
+                            trigger: true
+                        });
+                    });
+
                     /*this.listenTo(groupButtonModel, 'change:active', function (model, period) {
-                        dateSwitcherModel.set('type', _getSwitcherType(Number(period)));
-                    });*/
+                     dateSwitcherModel.set('type', _getSwitcherType(Number(period)));
+                     });*/
                 }
             });
 

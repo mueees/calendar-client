@@ -84,7 +84,8 @@ define([
                 }),
                 settings: {
                     label: ' '
-                }
+                },
+                time: this.model.get('start')
             });
             this.datePicker.show();
             this.listenTo(this.datePicker, 'mue:change:time', function (time) {

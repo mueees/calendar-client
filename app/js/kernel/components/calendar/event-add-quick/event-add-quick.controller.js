@@ -2,8 +2,9 @@ define([
     'app',
     'marionette',
     './event-add-quick.view',
-    'kernel/resource/event.model'
-], function (App, Marionette, AddView, EventModel) {
+    'kernel/resource/event.model',
+    'kernel/event-storage/event-storage.service'
+], function (App, Marionette, AddView, EventModel, $mEventStorage) {
     return Marionette.Object.extend({
         initialize: function (options) {
             options = options || {};
@@ -52,9 +53,10 @@ define([
         },
 
         _onEditHandler: function () {
+            $mEventStorage.setNewEvent(this.event.toJSON());
+
             App.navigate('#event/create', {
-                trigger: true,
-                event: this.event
+                trigger: true
             });
         },
 
