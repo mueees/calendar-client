@@ -112,6 +112,17 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            vendor_css_compile: {
+                files: [
+                    {
+                        src: ['<%= vendor_files.css %>'],
+                        dest: '<%= compile_dir %>/app/assets/css/vendor',
+                        cwd: '.',
+                        expand: true,
+                        flatten: true
+                    }
+                ]
+            },
             vendor_js_compile: {
                 files: [
                     {
@@ -214,6 +225,8 @@ module.exports = function (grunt) {
         'copy:app_assets_compile',
 
         'copy:vendor_js_compile',
+
+        'copy:vendor_css_compile',
 
         'copy:index',
 
