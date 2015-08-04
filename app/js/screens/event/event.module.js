@@ -4,6 +4,7 @@ define([
     'moment',
     'underscore',
     'kernel/components/router/BaseRouter.router',
+    'kernel/resource/event.model',
 
     './layout.view',
     'kernel/resource/calendar.collection',
@@ -12,7 +13,7 @@ define([
     // components
     'kernel/components/calendar/event-add/event-add.controller',
     'kernel/components/calendar/event-edit/event-edit.controller'
-], function (App, Backbone, moment, _, BaseRouter, Layout, CalendarCollection, $mEventStorage, AddEventController, EditEventController) {
+], function (App, Backbone, moment, _, BaseRouter, EventModel, Layout, CalendarCollection, $mEventStorage, AddEventController, EditEventController) {
     App.module('Apps.Event', {
         startWithParent: false,
 
@@ -68,28 +69,24 @@ define([
                     },
 
                     controller: {
-                        create: function (resolve) {
+                        create: function (options) {
                             App.startSubApp("Apps.Event");
 
                             if (controller) {
                                 controller.destroy();
                             }
 
-                            controller = new CreateController({
-                                resolve: resolve
-                            });
+                            controller = new CreateController(options);
                         },
 
-                        edit: function (resolve) {
+                        edit: function (options) {
                             App.startSubApp("Apps.Event");
 
                             if (controller) {
                                 controller.destroy();
                             }
 
-                            controller = new EditController({
-                                resolve: resolve
-                            });
+                            controller = new EditController(options);
                         }
                     }
                 }),
@@ -119,21 +116,33 @@ define([
 
             var EditController = Marionette.Object.extend({
                 initialize: function (options) {
-                    var layout = new Layout();
+                    var me = this,
+                        layout = new Layout(),
+                        deferred = $.Deferred();
 
                     App.body.show(layout);
 
-                    var editEventController = new EditEventController({
-                        region: layout.getRegion('content'),
-                        calendars: options.resolve.calendars,
-                        event: $mEventStorage.getEditEvent()
-                    });
+                    if (!$mEventStorage.getEditEvent()) {
+                        EventModel.getById(options.parameters[0]).done(function (event) {
+                            deferred.resolve(event);
+                        });
+                    } else {
+                        deferred.resolve($mEventStorage.getEditEvent());
+                    }
 
-                    editEventController.show();
+                    deferred.done(function (event) {
+                        var editEventController = new EditEventController({
+                            region: layout.getRegion('content'),
+                            calendars: options.resolve.calendars,
+                            event: event
+                        });
 
-                    this.listenTo(editEventController, 'mue:cancel mue:edit', function () {
-                        App.navigate("#main", {
-                            trigger: true
+                        editEventController.show();
+
+                        me.listenTo(editEventController, 'mue:cancel mue:edit', function () {
+                            App.navigate("#main", {
+                                trigger: true
+                            });
                         });
                     });
                 }
@@ -143,7 +152,9 @@ define([
             });
 
             Main.on('stop', function () {
-                controller.destroy();
+                if (controller) {
+                    controller.destroy();
+                }
             });
 
             App.addInitializer(function () {

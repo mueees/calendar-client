@@ -17,8 +17,8 @@ define([
         },
 
         triggers: {
-            'submit': 'create',
-            'click [data-link="create"]': 'create',
+            'submit': 'edit',
+            'click [data-link="edit"]': 'edit',
             'click [data-link="cancel"]': 'cancel'
         },
 
@@ -212,7 +212,7 @@ define([
             var repeatDays = [];
 
             _.each(this.ui.repeatDays.find('input'), function ($day) {
-                if( $day.checked ){
+                if ($day.checked) {
                     repeatDays.push($day.value);
                 }
             });
@@ -227,10 +227,14 @@ define([
         _onRepeatTypeHandler: function () {
             var repeatType = this.model.get('repeatType');
 
-            if(repeatType && repeatType == 2){
+            if( !repeatType ){
+                this.model.set('repeatType', 1);
+            }
+
+            if (repeatType && repeatType == 2) {
                 // this is weekly type, user should choose repeat days
                 this.ui.repeatDays.removeClass('hidden');
-            }else{
+            } else {
                 this.ui.repeatDays.addClass('hidden');
             }
         }

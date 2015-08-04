@@ -55,7 +55,8 @@ define(['backbone', 'jquery'], function (Backbone, $) {
                     // the user to return false from within the before filter
                     // to prevent the original route callback and after
                     // filter from running.
-                    var beforeResult = self.before.apply(this, [route, name, access]);
+                    var beforeResult = self.before.apply(this, [route, name, access]),
+                        args = [].slice.call(arguments);
 
                     if (beforeResult === undefined || typeof beforeResult.then !== "function") {
                         var def = $.Deferred();
@@ -72,7 +73,6 @@ define(['backbone', 'jquery'], function (Backbone, $) {
                     beforeResult
                         .then(function () {
                             // load resolve resources
-
                             var def = $.Deferred(),
                                 promises = [];
 
@@ -101,16 +101,22 @@ define(['backbone', 'jquery'], function (Backbone, $) {
 
                             return def.promise();
                         })
-                        .then(function () {
+                        .then(function (resolve) {
                             // If the callback exists, then call it. This means that the before
                             // and after filters will be called whether or not an actual
                             // callback function is supplied to handle a given route.
                             if (callback) {
-                                callback.apply(this, arguments);
+                                callback.call(this, {
+                                    parameters: args,
+                                    resolve: resolve
+                                });
                             }
 
                             // Call the after filter.
-                            self.after.apply(this, arguments);
+                            self.after.call(this, {
+                                parameters: args,
+                                resolve: resolve
+                            });
                         });
                 };
 

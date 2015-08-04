@@ -56,10 +56,8 @@ define([
                     },
 
                     controller: {
-                        main: function (resolve) {
-                            App.startSubApp("Apps.Main", {
-                                resolve: resolve
-                            });
+                        main: function (options) {
+                            App.startSubApp("Apps.Main", options);
                         }
                     }
                 }),

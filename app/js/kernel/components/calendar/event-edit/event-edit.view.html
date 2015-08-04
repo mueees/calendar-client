@@ -3,9 +3,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-banana btn-action btn-sm" data-link="create"><i
-                            class="fa fa-plus mue-icon"></i>
-                        <span>Create</span>
+                    <button type="submit" class="btn btn-lagoon btn-action btn-sm" data-link="edit"><i
+                            class="fa fa-pencil mue-icon"></i>
+                        <span>Edit</span>
                     </button>
                     <button type="button" class="btn btn-neutral" data-link="cancel">Cancel</button>
                 </div>
@@ -15,7 +15,7 @@
             <div class="col-md-7">
                 <div class="form-group">
                     <div class="form-control-icon">
-                        <input type="text" name="title" class="form-control" placeholder="Title">
+                        <input type="text" value="<%= event.title %>" name="title" class="form-control" placeholder="Title">
                     </div>
                 </div>
 
@@ -60,10 +60,10 @@
                 <div class="form-group" data-el="is-repeat-region">
                     <div class="form-group">
                         <select name="repeatType">
-                            <option value="1">Daily</option>
-                            <option value="2">Weekly</option>
-                            <option value="3">Monthly</option>
-                            <option value="4">Yearly</option>
+                            <option value="1" <%= (event.eventType == 1) ? 'selected' : '' %> >Daily</option>
+                            <option value="2" <%= (event.eventType == 2) ? 'selected' : '' %> >Weekly</option>
+                            <option value="3" <%= (event.eventType == 3) ? 'selected' : '' %> >Monthly</option>
+                            <option value="4" <%= (event.eventType == 4) ? 'selected' : '' %> >Yearly</option>
                         </select>
                     </div>
 
