@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-2">
-        <div class="mue-calendar-date <%= (today) ? 'today' : ''%>">
+        <div class="mue-calendar-date <%= (today) ? 'today' : ''%> <%= (weekend) ? 'weekend' : ''%>">
             <p class="mue-calendar-date-number"><%= date.date %></p>
 
             <p><%= date.day %>, <%= date.month %></p>

@@ -49,6 +49,7 @@ define([
             });
 
             model.today = momentDate.format('Do dddd, MMMM YYYY') == moment(new Date()).format('Do dddd, MMMM YYYY');
+            model.weekend = (momentDate.toDate().getDay() == 6) || (momentDate.toDate().getDay() == 0);
 
             return model;
         },

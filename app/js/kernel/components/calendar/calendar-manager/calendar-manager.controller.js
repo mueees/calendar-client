@@ -18,10 +18,29 @@ define([
             });
 
             this.listenTo(this.view, 'newCalendar', this._onNewCalendarHandler);
+            this.listenTo(this.view, 'selectAll', this._onSelectAllHandler);
+            this.listenTo(this.view, 'unSelectAll', this._onUnSelectAllHandler);
         },
 
         show: function () {
             this.region.show(this.view);
+        },
+
+        _onSelectAllHandler: function () {
+            this.calendars.each(function (calendar) {
+                if (!calendar.get('active')) {
+                    calendar.toggleActive();
+                }
+            });
+
+        },
+
+        _onUnSelectAllHandler: function () {
+            this.calendars.each(function (calendar) {
+                if (calendar.get('active')) {
+                    calendar.toggleActive();
+                }
+            });
         },
 
         _onNewCalendarHandler: function () {

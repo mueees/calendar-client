@@ -47,8 +47,10 @@ define([
             });
         },
 
-        toggleActive: function () {
-            this.set('active', !this.get('active'));
+        toggleActive: function (options) {
+            options = options || {};
+
+            this.set('active', !this.get('active'), options);
 
             this.fetch({
                 type: 'POST',

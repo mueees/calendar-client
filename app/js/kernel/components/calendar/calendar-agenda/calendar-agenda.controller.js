@@ -5,7 +5,7 @@ define([
     './calendar-agenda.view',
     'kernel/resource/event.collection',
     'moment',
-    'underscore',
+    'lodash',
     'kernel/event-storage/event-storage.service'
 ], function (App, Marionette, $mChannel, AgendaView, EventCollection, moment, _, $mEventStorage) {
     var DayModel = Backbone.Model.extend({}),
@@ -43,10 +43,14 @@ define([
             this._findEvents();
         },
 
-        _findEvents: function () {
-            var calendarIds = _.map(_.where(this.calendars.toJSON(), {active: true}), '_id');
+        _getActiveCalendarIds: function () {
+            return _.map(_.filter(this.calendars.toJSON(), {active: true}), '_id');
+        },
 
-            if (calendarIds.length) {
+        _findEvents: function () {
+            var calendarIds = this._getActiveCalendarIds();
+
+            if (_.size(calendarIds)) {
                 EventCollection.find({
                     start: this.agendaModel.get('start'),
                     end: this.agendaModel.get('end'),
@@ -61,7 +65,7 @@ define([
             var days = this._generateDays(this.agendaModel.get('start'), this.agendaModel.get('end')),
                 me = this;
 
-            if (eventCollection) {
+            if (_.size(this._getActiveCalendarIds())) {
                 this._populateData(days, eventCollection, this.calendars);
             }
 
