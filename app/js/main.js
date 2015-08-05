@@ -5,6 +5,7 @@ require([
     'clientCore/modal/modal.service',
     'kernel/security/security.service',
     'kernel/ajax/ajax.service',
+    'clientCore/ajax-loader/ajax-loader.service',
     /*'kernel/fake-server/fake-server.service',*/
 
     //screens
