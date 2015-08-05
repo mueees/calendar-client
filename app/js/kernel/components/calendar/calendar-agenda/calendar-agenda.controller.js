@@ -134,9 +134,7 @@ define([
         _editEventHandler: function (event) {
             $mEventStorage.setEditEvent(event);
 
-            var _id = event.get('rowId') || event.get('_id');
-
-            App.navigate('#event/edit/' + _id, {
+            App.navigate('#event/edit/' + event.getId(), {
                 trigger: true
             });
         }

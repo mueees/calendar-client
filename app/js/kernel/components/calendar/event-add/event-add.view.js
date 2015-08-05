@@ -120,7 +120,7 @@ define([
             });
             this.endDatePicker.show();
             this.listenTo(this.endDatePicker, 'mue:change:time', function (date) {
-                me.model.set('repeatEnd', date);
+                me.model.set('repeatEnd', moment(date).add(5, 'hours').toDate());
             });
 
             // init start time picker

@@ -74,6 +74,12 @@ define([
                     data.end = new Date(data.end);
                 }
 
+                if (_.isString(data.repeatEnd)) {
+                    data.repeatEnd = new Date(data.repeatEnd);
+                }
+
+
+
                 return data;
             },
 

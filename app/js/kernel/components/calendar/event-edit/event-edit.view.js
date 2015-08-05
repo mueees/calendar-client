@@ -12,8 +12,7 @@ define([
         className: 'panel mue-panel mue-form-panel mue-event-edit',
 
         events: {
-            'click [data-el="end-date-checker"]': '_onEndDateCheckerHandler',
-            'click [data-el="repeat-days-region"]': '_onRepeatDaysCheckerHandler'
+            'click [data-el="end-date-checker"]': '_onEndDateCheckerHandler'
         },
 
         triggers: {
@@ -51,7 +50,28 @@ define([
                 observe: 'isRepeat'
             },
             '[name=repeatType]': {
-                observe: 'repeatType'
+                observe: 'repeatType',
+                selectOptions: {
+                    collection: function() {
+                        return [
+                            {
+                                value:1, label:'Daily'
+                            },
+                            {
+                                value:2, label: 'Weekly'
+                            },
+                            {
+                                value:3, label: 'Monthly'
+                            },
+                            {
+                                value:4, label: 'Yearly'
+                            }
+                        ];
+                    }
+                }
+            },
+            '[name="repeatDays"]' : {
+                observe: 'repeatDays'
             }
         },
 
@@ -65,6 +85,9 @@ define([
             this.listenTo(this.model, 'change:isAllDay', this._onAllDayHandler);
             this.listenTo(this.model, 'change:isRepeat', this._onRepeatHandler);
             this.listenTo(this.model, 'change:repeatType', this._onRepeatTypeHandler);
+            this.listenTo(this.model, 'change', function(model){
+                console.log(model.toJSON());
+            });
         },
 
         serializeData: function () {
@@ -116,11 +139,12 @@ define([
                 }),
                 settings: {
                     label: 'End date'
-                }
+                },
+                time: this.model.get('repeatEnd')
             });
             this.endDatePicker.show();
             this.listenTo(this.endDatePicker, 'mue:change:time', function (date) {
-                me.model.set('repeatEnd', date);
+                me.model.set('repeatEnd', moment(date).add(5, 'hours').toDate());
             });
 
             // init start time picker
@@ -206,22 +230,6 @@ define([
                 this.endDatePicker.disable();
                 this.model.set('repeatEnd', null);
             }
-        },
-
-        _setAllRepeatDays: function () {
-            var repeatDays = [];
-
-            _.each(this.ui.repeatDays.find('input'), function ($day) {
-                if ($day.checked) {
-                    repeatDays.push($day.value);
-                }
-            });
-
-            this.model.set('repeatDays', repeatDays);
-        },
-
-        _onRepeatDaysCheckerHandler: function () {
-            this._setAllRepeatDays();
         },
 
         _onRepeatTypeHandler: function () {
