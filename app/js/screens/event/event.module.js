@@ -3,7 +3,7 @@ define([
     'backbone',
     'moment',
     'underscore',
-    'kernel/components/router/BaseRouter.router',
+    'clientCore/components/router/base.router',
     'kernel/resource/event.model',
 
     './layout.view',

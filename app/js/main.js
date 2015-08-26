@@ -1,9 +1,10 @@
 require([
     'app',
     'jquery',
+    'config/app',
     'clientCore/notify/notify.service',
     'clientCore/modal/modal.service',
-    'kernel/security/security.service',
+    'clientCore/security/authentication.service',
     'kernel/ajax/ajax.service',
     'clientCore/ajax-loader/ajax-loader.service',
     /*'kernel/fake-server/fake-server.service',*/
@@ -12,18 +13,22 @@ require([
     'screens/sign/module',
     'screens/main/module',
     'screens/event/event.module'
-], function (App, $, $mNotify, $mModal, $mSecurity) {
+], function (App, $, config, $mNotify, $mModal, $authentication) {
     $mNotify.setContainer($('.mue-notify'));
 
     $mModal.setContainer($('.mue-modal'));
 
-    $mSecurity.setAfterAuth({
+    $authentication.setTargetPage({
         fragment: 'main'
     });
-
-    $mSecurity.setSignPage({
+    $authentication.setLoginPage({
         fragment: 'sign'
     });
+
+    $authentication.configProxy({
+        origin: config.proxy.origin
+    });
+    $authentication.initializeProxy(config.proxy.oauth);
 
     App.start();
 });

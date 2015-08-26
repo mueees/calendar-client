@@ -1,5 +1,4 @@
 define([], function () {
-
     var baseConfig = Calendar || {},
         config = {};
 

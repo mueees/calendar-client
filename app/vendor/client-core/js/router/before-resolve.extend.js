@@ -105,18 +105,18 @@ define(['backbone', 'jquery'], function (Backbone, $) {
                             // If the callback exists, then call it. This means that the before
                             // and after filters will be called whether or not an actual
                             // callback function is supplied to handle a given route.
+
+                            var data = {
+                                parameters: args,
+                                resolve: resolve
+                            };
+
                             if (callback) {
-                                callback.call(this, {
-                                    parameters: args,
-                                    resolve: resolve
-                                });
+                                callback.call(this, data);
                             }
 
                             // Call the after filter.
-                            self.after.call(this, {
-                                parameters: args,
-                                resolve: resolve
-                            });
+                            self.after.call(this, data);
                         });
                 };
 

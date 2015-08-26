@@ -1,6 +1,6 @@
 define([
     'app',
-    'kernel/components/router/BaseRouter.router',
+    'clientCore/components/router/base.router',
     'kernel/components/sign/sign.controller',
     './layout.view',
 

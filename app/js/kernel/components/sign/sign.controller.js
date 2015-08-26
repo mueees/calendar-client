@@ -1,9 +1,10 @@
 define([
     'backbone',
     'marionette',
-    'kernel/security/security.service',
+    'clientCore/security/authentication.service',
+    'clientCore/channel/channel.service',
     './sign.view'
-], function (Backbone, Marionette, $mSecurity, View) {
+], function (Backbone, Marionette, $authentication, $channel, View) {
     return Marionette.Controller.extend({
         initialize: function (options) {
             this.options = options || {};
@@ -21,7 +22,9 @@ define([
         },
 
         onEnterHandler: function () {
-            $mSecurity.sign();
+            $authentication.login().then(function (data) {
+                $channel.trigger('login:success', data);
+            });
         }
     });
 });

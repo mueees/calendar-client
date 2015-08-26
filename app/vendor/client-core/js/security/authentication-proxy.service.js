@@ -1,4 +1,4 @@
-(function (w) {
+define([], function () {
     var applicationOauthKey = null,
         timeout = 1000 * 60 * 2,
         origin = 'http://proxy.mue.in.ua',
@@ -6,9 +6,7 @@
         provide = null;
 
     function initialize(oauthKey) {
-        if (oauthKey && !applicationOauthKey) {
-            applicationOauthKey = oauthKey;
-        }
+        applicationOauthKey = oauthKey;
     }
 
     function config(options) {
@@ -48,7 +46,7 @@
 
             this.window = window.open(provideServer + applicationOauthKey);
 
-            w.addEventListener("message", function (e) {
+            window.addEventListener("message", function (e) {
                 me.receiveMessage(e);
             }, false);
 
@@ -123,9 +121,9 @@
         }
     };
 
-    w.Mue = {
+    return {
         initialize: initialize,
         popup: popup,
         config: config
-    };
-})(window);
+    }
+});

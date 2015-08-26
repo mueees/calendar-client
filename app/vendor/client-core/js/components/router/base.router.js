@@ -1,26 +1,28 @@
 define([
     'app',
     'marionette',
-    'kernel/security/security.service',
-
+    'clientCore/security/authentication.service',
     'clientCore/router/before-resolve.extend'
-], function (App, Marionette, $mSecurity) {
+], function (App, Marionette, $authentication) {
     return Marionette.AppRouter.extend({
         before: function (route, name, access) {
-            var isAuth = $mSecurity.isAuth();
+            var isLogin = $authentication.isLogin();
 
             if (access.auth) {
-                if (!isAuth) {
-                    $mSecurity.setAfterAuth({
+                if (isLogin) {
+
+                } else {
+                    $authentication.setTargetPage({
                         fragment: route
                     });
 
                     this.authError(route, name, access);
-                    $mSecurity.navigateToSign(route, name, access);
+
+                    $authentication.navigateToLogin(route, name, access);
 
                     return false;
                 }
-            } else if (access.redirectIfAuth && isAuth) {
+            } else if (access.redirectIfAuth && isLogin) {
                 App.navigate('#' + access.redirectIfAuth.fragment, {
                     trigger: true
                 });
@@ -30,6 +32,7 @@ define([
         },
 
         authError: function (route, name, access) {
+
         }
     });
 });
