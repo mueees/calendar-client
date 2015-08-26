@@ -83,11 +83,15 @@ define([
             client_token: data.client_token
         });
 
-        router.navigate(targetPage.fragment);
+        router.navigate(targetPage.fragment, {
+            trigger: true
+        });
     }
 
     function _redirectToLoginState() {
-        router.navigate(loginPage.fragment);
+        router.navigate(loginPage.fragment, {
+            trigger: true
+        });
     }
 
     return {

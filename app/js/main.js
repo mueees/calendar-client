@@ -5,9 +5,8 @@ require([
     'clientCore/notify/notify.service',
     'clientCore/modal/modal.service',
     'clientCore/security/authentication.service',
-    'kernel/ajax/ajax.service',
+    'clientCore/ajax/ajax.service',
     'clientCore/ajax-loader/ajax-loader.service',
-    /*'kernel/fake-server/fake-server.service',*/
 
     //screens
     'screens/sign/module',

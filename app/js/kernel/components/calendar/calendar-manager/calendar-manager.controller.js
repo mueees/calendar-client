@@ -32,7 +32,6 @@ define([
                     calendar.toggleActive();
                 }
             });
-
         },
 
         _onUnSelectAllHandler: function () {
