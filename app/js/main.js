@@ -8,7 +8,11 @@ require([
     'clientCore/ajax/ajax.service',
     'clientCore/ajax-loader/ajax-loader.service',
 
+    // route
+    'route',
+
     //screens
+    'screens/test/module',
     'screens/sign/module',
     'screens/main/module',
     'screens/event/event.module'
